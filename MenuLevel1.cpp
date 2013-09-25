@@ -21,7 +21,7 @@ std::shared_ptr<IScene> MenuLevel1Item::click(){
 	return std::make_shared<MenuLevel2>(m_Func);
 }
 
-MenuLevel1::MenuLevel1() : m_CurrentIndex(0), m_Joypad(1){
+MenuLevel1::MenuLevel1() : m_CurrentIndex(0), m_Joypad(0){
 	m_Menu.push_back(MenuLevel1Item(_T(""), [](GameData & game)->bool{
 		return true;
 	}));
@@ -37,7 +37,7 @@ MenuLevel1::MenuLevel1() : m_CurrentIndex(0), m_Joypad(1){
 	m_Menu.push_back(MenuLevel1Item(_T(""), [](GameData & game)->bool{
 		return game.getNumOfPersonsPlayingGame().at(3);
 	}));
-	m_Back.setResouceName(_T("kikai.x"));
+	m_Back.setResouceName(_T("taka2.x"));
 	m_Back.setPosition(Glas::Vector3f(-30,-50,80));
 	m_Back.setScale(0.02f);
 }
@@ -48,7 +48,7 @@ void MenuLevel1::step(
 	sceneStack->setNextScene(sceneStack->getCurrentScene());
 
 	m_Joypad.update();
-	if(m_Joypad.getButton(AbsJoypad::Up).isJustPressed()){
+	if(m_Joypad.getButton(AbsJoypad::Up).isPressed()){
 		if(m_CurrentIndex==0) m_CurrentIndex = m_Menu.size();
 		--m_CurrentIndex;
 		sceneStack->setNextScene(std::make_shared<WaitScene>(20));

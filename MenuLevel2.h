@@ -6,7 +6,7 @@
 
 class MenuLevel2 : public IScene{
 public:
-	MenuLevel2(std::function<bool(GameData &)> func) : m_GameList(GameList(func)), m_Joypad(1), m_CurrentIndex(0){};
+	MenuLevel2(std::function<bool(GameData &)> func) : m_GameList(GameList(func)), m_Joypad(0), m_CurrentIndex(0){};
 	void step(
 		SceneHandler * sceneStack
 	);

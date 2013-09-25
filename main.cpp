@@ -21,7 +21,6 @@ int main()
 		if(!GetSingleton<DXLib::DXManager>()->Setup(hWnd, 800, 600, true)) return 1;
 		if(!GetSingleton<DXLib::DXInput>()->Setup(hInst, hWnd)) return 1;
 	}
-
 	GameListInit("./Games");
 	
 	auto v = GameList([](GameData & g){return true;});
