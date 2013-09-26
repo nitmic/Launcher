@@ -12,11 +12,11 @@ IntroScene::IntroScene() : m_Joypad(0){
 void IntroScene::step(SceneHandler * sceneStack){
 	m_Joypad.update();
 	
-	//if((!m_Intro.refresh()) || m_Joypad.getButton(AbsJoypad::A).isJustPressed()){
+	if((!m_Intro.refresh()) || m_Joypad.getButton(AbsJoypad::A).isJustPressed()){
 		sceneStack->setNextScene(std::make_shared<MenuLevel1>());
 		return;
-	//}
-	//sceneStack->setNextScene(sceneStack->getCurrentScene());
+	}
+	sceneStack->setNextScene(sceneStack->getCurrentScene());
 }
 
 void IntroScene::draw(){

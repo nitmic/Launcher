@@ -37,6 +37,16 @@ MenuLevel1::MenuLevel1() : m_CurrentIndex(0), m_Joypad(0){
 	m_Menu.push_back(MenuLevel1Item(_T(""), [](GameData & game)->bool{
 		return game.getNumOfPersonsPlayingGame().at(3);
 	}));
+
+	m_Background.setResouceName(
+		_T("background.png"),
+		_T("background.png"),
+		_T("background.png"),
+		_T("background.png"),
+		_T("background.png"),
+		_T("background.png")
+	);
+
 	m_Back.setResouceName(_T("taka2.x"));
 	m_Back.setPosition(Glas::Vector3f(-30,-50,80));
 	m_Back.setScale(0.02f);
@@ -74,4 +84,5 @@ void MenuLevel1::step(
 void MenuLevel1::draw(){
 	m_Camera.transform();
 	m_Back.draw();
+	m_Background.draw();
 }

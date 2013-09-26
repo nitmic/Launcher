@@ -10,6 +10,7 @@
 #include <CameraIrrAdapter.hpp>
 #include <lightIrrAdapter.h>
 #include <JoypadDXAdapter.h>
+#include <BackgroundIrrAdapter.h>
 
 class MenuLevel1Item : public IDrawer{
 public:
@@ -34,6 +35,7 @@ public:
 private:
 	std::vector<MenuLevel1Item> m_Menu;
 	int m_CurrentIndex;
+	Background m_Background;
 	Drawer3DImpl m_Back;
 	Camera<DefaultCamera> m_Camera;
 	Joypad m_Joypad;
