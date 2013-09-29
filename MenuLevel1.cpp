@@ -48,7 +48,7 @@ MenuLevel1::MenuLevel1() : m_CurrentIndex(0), m_Joypad(0){
 	);
 
 	m_Back.setResouceName(_T("taka2.x"));
-	m_Back.setPosition(Glas::Vector3f(-30,-50,80));
+	m_Back.setPosition(Glas::Vector3f(-10,-50,70));
 	m_Back.setScale(0.02f);
 }
 

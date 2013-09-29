@@ -9264,7 +9264,7 @@ Frame ReplacedName0 {
       0.000000;0.000000;0.000000;;
       0.397290;0.000000;0.410000;;
       TextureFilename {
-       "\cl.png";
+       "cl.png";
       }
      }
 
@@ -23777,7 +23777,7 @@ Frame ReplacedName0 {
       0.000000;0.000000;0.000000;;
       0.397290;0.000000;0.410000;;
       TextureFilename {
-       "\cl.png";
+       "cl.png";
       }
      }
 
