@@ -90,21 +90,23 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameList.cpp" />
-    <ClCompile Include="MenuLevel1.cpp" />
+    <ClCompile Include="Level1.cpp" />
     <ClCompile Include="intro.cpp" />
+    <ClCompile Include="Level2Menu.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MenuLevel2.cpp" />
+    <ClCompile Include="Level1Menu.cpp" />
+    <ClCompile Include="Level2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AbsSlideMenu.h" />
     <ClInclude Include="GameList.h" />
-    <ClInclude Include="MenuLevel1.h" />
+    <ClInclude Include="Level1.h" />
     <ClInclude Include="Intro.h" />
-    <ClInclude Include="MenuLevel2.h" />
+    <ClInclude Include="Level1Menu.h" />
+    <ClInclude Include="Level2.h" />
+    <ClInclude Include="Level2Menu.h" />
     <ClInclude Include="picojson.hpp" />
     <ClInclude Include="stdafx.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="GameData.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

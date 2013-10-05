@@ -41,7 +41,9 @@ std::vector<GameData> GameList(std::function<bool(GameData &)> func){
 
 
 std::string GameData::getGameTitle() const{
-	return m_Data->get("title").to_str();
+	auto name = boost::filesystem::path(m_Data->get("title").to_str());
+	//auto name = boost::filesystem::path(m_Data->get("exeFileName").to_str());
+	return (boost::filesystem::path(m_Directory) / name).string();
 }
 
 std::string GameData::getGameGenre() const{

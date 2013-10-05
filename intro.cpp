@@ -1,7 +1,7 @@
 #include "Intro.h"
 #include "SceneHandler.h"
 #include <enumerate.hpp>
-#include "MenuLevel1.h"
+#include "Level1.h"
 #include <WaitScene.h>
 #include <GLAS.hpp>
 #include <Button.h>
@@ -13,7 +13,7 @@ void IntroScene::step(SceneHandler * sceneStack){
 	m_Joypad.update();
 	
 	if((!m_Intro.refresh()) || m_Joypad.getButton(AbsJoypad::A).isJustPressed()){
-		sceneStack->setNextScene(std::make_shared<MenuLevel1>());
+		sceneStack->setNextScene(std::make_shared<Level1>());
 		return;
 	}
 	sceneStack->setNextScene(sceneStack->getCurrentScene());
