@@ -6,6 +6,7 @@
 #include <Button.h>
 #include <MDAUtility.hpp>
 #include <BackgroundIrrAdapter.h>
+#include <SpriteIrrAdapter.h>
 #include <3DObjectIrrAdapter.h>
 #include <Camera.h>
 #include <CameraIrrAdapter.hpp>
@@ -22,6 +23,9 @@ struct Level1::Impl{
 	Impl() : joypad(0){}
 	Level1Menu menu;
 	Background background;
+	Sprite line;
+	Sprite gameSelect; 
+
 	Drawer3DImpl object3d;
 	Camera<DefaultCamera> camera;
 	Joypad joypad;
@@ -57,6 +61,11 @@ Level1::Level1(){
 		_T("background.png")
 	);
 
+	__impl__->line.setResouceName(_T("Line.png"));
+	__impl__->line.setPriority(5);
+	__impl__->gameSelect.setResouceName(_T("GameSelect.png"));
+	__impl__->gameSelect.setPriority(6);
+
 	__impl__->object3d.setResouceName(_T("taka2.x"));
 	__impl__->object3d.setPosition(Glas::Vector3f(-10,-50,70));
 	__impl__->object3d.setScale(0.02f);
@@ -90,4 +99,6 @@ void Level1::draw(){
 	__impl__->object3d.draw();
 	__impl__->background.draw();
 	__impl__->menu.draw();
+	__impl__->line.draw();
+	__impl__->gameSelect.draw();
 }
