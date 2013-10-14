@@ -3,7 +3,7 @@
 #include <tString.h>
 class GameData;
 
-struct GameCategory{
+class GameCategory{
 public:
 	std::function<bool(GameData)> getFilter();
 	tString getTitleImage_Path();

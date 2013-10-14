@@ -27,6 +27,7 @@ public:
 	void draw();
 	std::shared_ptr<IScene> select();
 private:
+	void addSelectItemUpdate();
 	std::vector<GameData> m_GameList;
 	
 	std::deque<Sprite> m_Titles;
@@ -37,5 +38,8 @@ private:
 
 	int m_Priority;
 	TUL::RingIndex m_CurrentIndex;
-	LerpAnimation lerp;
+	LerpAnimation m_Lerp;
+	
+	Sprite m_SelectGameInfo;
+	LerpAnimation m_SelectGameLerp;
 };

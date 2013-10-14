@@ -12,6 +12,8 @@
 struct Level0::Impl{
 	Impl() : marquee(9){}
 	Background background;
+	Sprite movieBack;
+	Sprite summaryBack;
 	Sprite line;
 	Sprite gameSelect; 
 	Marquee marquee;
@@ -32,7 +34,13 @@ Level0::Level0(){
 		resource::Background,
 		resource::Background
 	);
-
+	
+	__impl__->summaryBack.setResouceName(resource::SummaryBack);
+	__impl__->summaryBack.setPriority(0);
+	__impl__->summaryBack.setPosition(Glas::Vector2i(125,265));
+	__impl__->movieBack.setResouceName(resource::MovieBack);
+	__impl__->movieBack.setPriority(0);
+	__impl__->movieBack.setPosition(Glas::Vector2i(20, 100));
 	__impl__->line.setResouceName(resource::Belt);
 	__impl__->line.setPriority(8);
 	__impl__->gameSelect.setResouceName(title::resource::Title);
@@ -51,4 +59,7 @@ void Level0::draw(){
 	__impl__->line.draw();
 	__impl__->gameSelect.draw();
 	__impl__->marquee.draw();
+
+	__impl__->summaryBack.draw();
+	__impl__->movieBack.draw();
 }

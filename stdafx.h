@@ -41,11 +41,12 @@ namespace{
 		};
 
 		namespace menu{
-			const int Delay = 3;
+			const int Delay = 4;
+			const int SceneTransDelay = 15;
 			const int X = 500;
 			const int Y = 0;
-			const int ItemHeight = 50;
-			const int NumOfMenuItems = 13;
+			const int ItemHeight = 40;
+			const int NumOfMenuItems = 15;
 			const int SelectItemOrder = NumOfMenuItems/2;
 			const int LastItemOrder = NumOfMenuItems-1;
 

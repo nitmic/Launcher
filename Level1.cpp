@@ -37,12 +37,13 @@ void Level1::step(
 	SceneHandler * sceneStack
 ){
 	using config::menu::Delay;
+	using config::menu::SceneTransDelay;
 
 	__impl__->joypad.update();
 
 	if(__impl__->joypad.getButton(AbsJoypad::A).isJustPressed() || GetSingleton<DXLib::DXKeyboard>()->isPressed(0x1C)){
 		sceneStack->setNextScene(__impl__->menu.select());
-		sceneStack->setNextScene(std::make_shared<WaitScene>(15));
+		sceneStack->setNextScene(std::make_shared<WaitScene>(SceneTransDelay));
 		return;
 	}
 	
