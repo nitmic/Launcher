@@ -10,19 +10,18 @@
 
 #include <SpriteIrrAdapter.h>
 
+#include "GameCategory.h"
+#include "ScrollBar.h"
+
+
 class GameData;
 
 class IScene;
 
 class Level1Menu{
 public:
-	enum{
-		Delay = 3,
-		NumOfTitles = 13 // äÔêîå¿íË
-	};
-
-	Level1Menu();
-	void addItem(tString titleImg_path, std::function<bool(GameData)> func);
+	Level1Menu(int priority);
+	void addItem(tString itemImg_path, GameCategory func);
 
 	void next();
 	void prev();
@@ -30,11 +29,14 @@ public:
 	void draw();
 	std::shared_ptr<IScene> select();
 private:
-	std::vector<std::function<bool(GameData)>> m_Filters;
+	std::vector<GameCategory> m_Filters;
 	std::deque<Sprite> m_Titles;
 	std::vector<tString> m_Title_Paths;
-	std::array<Sprite, NumOfTitles> m_Backgrounds;
+	std::array<Sprite, config::menu::NumOfMenuItems> m_Backgrounds;
 	Sprite m_Select;
+	ScrollBar m_Bar;
+
+	int m_Priority;
 	TUL::RingIndex m_CurrentIndex;
 	LerpAnimation lerp;
 };

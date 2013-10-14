@@ -5,14 +5,14 @@
 class SceneHandler;
 
 
-class Level1 : public IScene{
+class Level0 : public IScene{
 public:
-	Level1();
+	Level0();
 	void step(
 		SceneHandler * sceneStack
-	);
+	){};
 	void draw();
-	bool isTransparency(){return true;};
+	bool isTransparency(){return false;};
 private:
 	struct Impl;
 	std::shared_ptr<Impl> __impl__;

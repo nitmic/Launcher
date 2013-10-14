@@ -14,10 +14,11 @@ class GameData{
 public:
 	GameData(){}
 	GameData(std::shared_ptr<picojson::value> json, std::string directory) : m_Data(json), m_Directory(directory){}
-	std::string getGameTitle() const;
 	std::string getGameGenre() const;
-	std::string getGameCreator() const;
-	std::string getGameDescription() const;
+	std::string getMenuImagePath() const;
+	std::string getSummaryImagePath() const;
+	std::string getInfoImagePath() const;
+	std::string getSampleVideoPath() const;
 	std::string getGameExeFilePath() const;
 	std::bitset<4> getNumOfPersonsPlayingGame() const;
 private:

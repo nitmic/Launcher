@@ -89,23 +89,31 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameCategory.cpp" />
     <ClCompile Include="GameList.cpp" />
+    <ClCompile Include="Level0.cpp" />
     <ClCompile Include="Level1.cpp" />
     <ClCompile Include="intro.cpp" />
     <ClCompile Include="Level2Menu.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Level1Menu.cpp" />
     <ClCompile Include="Level2.cpp" />
+    <ClCompile Include="Marquee.cpp" />
+    <ClCompile Include="ScrollBar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbsSlideMenu.h" />
+    <ClInclude Include="GameCategory.h" />
     <ClInclude Include="GameList.h" />
+    <ClInclude Include="Level0.h" />
     <ClInclude Include="Level1.h" />
     <ClInclude Include="Intro.h" />
     <ClInclude Include="Level1Menu.h" />
     <ClInclude Include="Level2.h" />
     <ClInclude Include="Level2Menu.h" />
+    <ClInclude Include="Marquee.h" />
     <ClInclude Include="picojson.hpp" />
+    <ClInclude Include="ScrollBar.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

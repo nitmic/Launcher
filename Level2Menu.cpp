@@ -3,28 +3,21 @@
 #include <algorithm>
 #include <enumerate.hpp>
 
-static const int TitleSize = 50;
-static const int DrawX = 500;
-static const int DrawY = 0;
-static const int SelectItemOrder = Level2Menu::NumOfTitles/2;
-static const int LastItemOrder = Level2Menu::NumOfTitles-1;
+Level2Menu::Level2Menu(int priority) : m_Priority(priority), m_Titles(config::menu::NumOfMenuItems), m_Bar(priority+1){
+	using namespace config;
 
-static const tString BackgroundImg_path = _T("MenuBackground.png");
-static const tString SelectImg_path = _T("select.png");
-
-Level2Menu::Level2Menu() : m_Titles(NumOfTitles){
 	std::for_each(m_Backgrounds.begin(), m_Backgrounds.end(), [&](Sprite & back){
-		back.setResouceName(BackgroundImg_path);
-		back.setPriority(4);
+		back.setResouceName(config::menu::resource::Back_game);
+		back.setPriority(m_Priority);
 	});
 	
 	std::for_each(m_Titles.begin(), m_Titles.end(), [&](Sprite & title){
-		title.setPriority(4);
+		title.setPriority(m_Priority);
 	});
 
-	m_Select.setResouceName(SelectImg_path);
-	m_Select.setPriority(5);
-	m_Select.setPosition(Glas::Vector2i(DrawX, DrawY+SelectItemOrder*TitleSize));
+	m_Select.setResouceName(menu::resource::Select);
+	m_Select.setPriority(m_Priority+1);
+	m_Select.setPosition(Glas::Vector2i(menu::X, menu::Y+menu::SelectItemOrder*menu::ItemHeight));
 }
 
 
@@ -34,43 +27,52 @@ void Level2Menu::addItem(GameData gameData){
 	m_CurrentIndex = TUL::RingIndex(m_GameList.size());
 
 	std::for_each(m_Titles.begin(), m_Titles.end(), TUL::enumerate<void>([&,this](Sprite & title, int i){
-		auto path = m_GameList[m_CurrentIndex-SelectItemOrder+i].getGameTitle();
+		using namespace config;
+		auto path = m_GameList[m_CurrentIndex-menu::SelectItemOrder+i].getMenuImagePath();
 		tString tPath(path.begin(), path.end());
 		title.setResouceName(tPath);
 	}));
 }
 
 void Level2Menu::next(){
-	auto data = m_GameList[m_CurrentIndex+(LastItemOrder-SelectItemOrder)+1];
-	auto path = data.getGameTitle();
+	using namespace config;
+
+	auto data = m_GameList[m_CurrentIndex+(menu::LastItemOrder-menu::SelectItemOrder)+1];
+	auto path = data.getMenuImagePath();
 	tString tPath(path.begin(), path.end());
 
 	Sprite title;
-	title.setPriority(4);
+	title.setPriority(m_Priority);
 	title.setResouceName(tPath);
 	m_Titles.push_back(title);
 	m_CurrentIndex++;
 
-	lerp = LerpAnimation(Delay, -TitleSize, 0, [&, this]()->double{
+	lerp = LerpAnimation(menu::Delay, -menu::ItemHeight, 0, [&, this]()->double{
 		this->m_Titles.pop_front();
 		return 0;
 	});
+
+	m_Bar.setPosition((double)m_CurrentIndex/(double)m_GameList.size());
 }
 
 void Level2Menu::prev(){
-	auto path = m_GameList[m_CurrentIndex-SelectItemOrder-1].getGameTitle();
+	using namespace config;
+
+	auto path = m_GameList[m_CurrentIndex-menu::SelectItemOrder-1].getMenuImagePath();
 	tString tPath(path.begin(), path.end());
 
 	Sprite title;
-	title.setPriority(4);
+	title.setPriority(m_Priority);
 	title.setResouceName(tPath);
 	m_Titles.push_front(title);
 	m_CurrentIndex--;
 
-	lerp = LerpAnimation(Delay, 0, -TitleSize, [&, this]()->double{
+	lerp = LerpAnimation(menu::Delay, 0, -menu::ItemHeight, [&, this]()->double{
 		this->m_Titles.pop_back();
 		return 0;
 	});
+	
+	m_Bar.setPosition((double)m_CurrentIndex/(double)m_GameList.size());
 }
 
 
@@ -82,19 +84,21 @@ std::shared_ptr<IScene> Level2Menu::select(){
 }
 
 void Level2Menu::draw(){
+
 	int animated_pixel = (lerp.isAnimating()) ? lerp.next() : 0;
 	
 	std::for_each(m_Titles.begin(), m_Titles.end(), TUL::enumerate<void>([&,this](Sprite & title, int i){
-		title.setPosition(Glas::Vector2i(DrawX, DrawY+i*TitleSize+animated_pixel));
+		using namespace config;
+		title.setPosition(Glas::Vector2i(menu::X, menu::Y+i*menu::ItemHeight+animated_pixel));
 		title.draw();
 	}));
 	
 	std::for_each(m_Backgrounds.begin(), m_Backgrounds.end(), TUL::enumerate<void>([&,this](Sprite & back, int i){
-		back.setPosition(Glas::Vector2i(DrawX, DrawY+i*TitleSize+animated_pixel));
+		using namespace config;
+		back.setPosition(Glas::Vector2i(menu::X, menu::Y+i*menu::ItemHeight+animated_pixel));
 		back.draw();
 	}));
-
-	m_Select.draw();
-
 	
+	m_Bar.draw();
+	m_Select.draw();
 }

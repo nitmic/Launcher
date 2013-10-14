@@ -10,18 +10,15 @@
 #include <LerpAnimation.h>
 
 #include <SpriteIrrAdapter.h>
+
+#include "ScrollBar.h"
 #include "GameList.h"
 
 class IScene;
 
 class Level2Menu{
 public:
-	enum{
-		Delay = 3,
-		NumOfTitles = 13 // äÔêîå¿íË
-	};
-
-	Level2Menu();
+	Level2Menu(int priority);
 	void addItem(GameData gameData);
 
 	void next();
@@ -33,9 +30,12 @@ private:
 	std::vector<GameData> m_GameList;
 	
 	std::deque<Sprite> m_Titles;
-	std::array<Sprite, NumOfTitles> m_Backgrounds;
+	std::array<Sprite, config::menu::NumOfMenuItems> m_Backgrounds;
 	Sprite m_Select;
 
+	ScrollBar m_Bar;
+
+	int m_Priority;
 	TUL::RingIndex m_CurrentIndex;
 	LerpAnimation lerp;
 };

@@ -18,13 +18,11 @@ int main()
 	//Joypad & sound—p
 	{
 		auto hWnd = app->accessHWND();
-		if(!GetSingleton<DXLib::DXManager>()->Setup(hWnd, 800, 600, true)) return 1;
+		if(!GetSingleton<DXLib::DXManager>()->Setup(hWnd, config::Width, config::Height, true)) return 1;
 		if(!GetSingleton<DXLib::DXInput>()->Setup(hInst, hWnd)) return 1;
 	}
 	GameListInit("./Games");
 	
-	auto v = GameList([](GameData & g){return true;});
-
 	GameLoop gameLoop(std::make_shared<IntroScene>());
 	app->setOnFrameUpdate([&]()->bool{
 		GetSingleton<DXLib::DXInput>()->Update();

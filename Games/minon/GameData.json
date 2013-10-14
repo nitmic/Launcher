@@ -1,0 +1,12 @@
+{
+	"resource": {
+		"menu" : "GameListMenu.png",
+		"info" : "Info.png",
+		"summary" : "Summary.png",
+		"sampleVideo" : "",
+		"sampleImages" : [""]
+	},
+	"genre": "Action",
+	"exe" : "Game.exe",
+	"numOfPersons" : [1,2]
+}

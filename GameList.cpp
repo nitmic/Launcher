@@ -20,7 +20,7 @@ void GameListInit(const std::string dir){
 	for(boost::filesystem::directory_iterator it(dir); it!=end; ++it){
 		if(!boost::filesystem::is_directory(*it)) continue;
 		
-		auto jsonPath = it->path() / "GameData.json";
+		auto jsonPath = it->path() / config::SettingFileName;
 		if(!boost::filesystem::is_regular_file(jsonPath)) continue;
 
 		std::ifstream ifs(jsonPath.c_str());
@@ -38,28 +38,32 @@ std::vector<GameData> GameList(std::function<bool(GameData &)> func){
 	return v;
 }
 
-
-
-std::string GameData::getGameTitle() const{
-	auto name = boost::filesystem::path(m_Data->get("title").to_str());
-	//auto name = boost::filesystem::path(m_Data->get("exeFileName").to_str());
-	return (boost::filesystem::path(m_Directory) / name).string();
-}
-
 std::string GameData::getGameGenre() const{
 	return m_Data->get("genre").to_str();
 }
 
-std::string GameData::getGameCreator() const{
-	return m_Data->get("creator").to_str();
+std::string GameData::getSummaryImagePath() const{
+	auto name = boost::filesystem::path(m_Data->get("resource").get("summary").to_str());
+	return (boost::filesystem::path(m_Directory) / name).string();
 }
 
-std::string GameData::getGameDescription() const{
-	return m_Data->get("description").to_str();
+std::string GameData::getMenuImagePath() const{
+	auto name = boost::filesystem::path(m_Data->get("resource").get("menu").to_str());
+	return (boost::filesystem::path(m_Directory) / name).string();
+}
+
+std::string GameData::getSampleVideoPath() const{
+	auto name = boost::filesystem::path(m_Data->get("resource").get("sampleVideo").to_str());
+	return (boost::filesystem::path(m_Directory) / name).string();
+}
+
+std::string GameData::getInfoImagePath() const{
+	auto name = boost::filesystem::path(m_Data->get("resource").get("info").to_str());
+	return (boost::filesystem::path(m_Directory) / name).string();
 }
 
 std::string GameData::getGameExeFilePath() const{
-	auto name = boost::filesystem::path(m_Data->get("exeFileName").to_str());
+	auto name = boost::filesystem::path(m_Data->get("exe").to_str());
 	return (boost::filesystem::path(m_Directory) / name).string();
 }
 
