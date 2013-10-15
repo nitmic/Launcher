@@ -9216,6 +9216,9 @@ Frame ReplacedName0 {
       5.000000;
       0.000000;0.000000;0.000000;;
       0.094000;0.114400;0.111200;;
+      TextureFilename {
+       "cl.png";
+      }
      }
 
      Material {
@@ -23729,6 +23732,9 @@ Frame ReplacedName0 {
       5.000000;
       0.000000;0.000000;0.000000;;
       0.094000;0.114400;0.111200;;
+      TextureFilename {
+       "cl.png";
+      }
      }
 
      Material {
