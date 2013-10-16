@@ -5,6 +5,7 @@
 #include <3DObjectIrrAdapter.h>
 #include <Camera.h>
 #include <CameraIrrAdapter.hpp>
+#include <lightIrrAdapter.h>
 
 #include "Marquee.h"
 
@@ -52,6 +53,9 @@ Level0::Level0(){
 }
 
 void Level0::draw(){
+	Glas::Vector3f p = __impl__->camera.getPosition() + Glas::Vector3f(0, -0.1, 0.15);
+	__impl__->camera.setPosition(p);
+
 	__impl__->camera.transform();
 	__impl__->object3d.draw();
 	__impl__->background.draw();
@@ -62,4 +66,5 @@ void Level0::draw(){
 
 	__impl__->summaryBack.draw();
 	__impl__->movieBack.draw();
+
 }

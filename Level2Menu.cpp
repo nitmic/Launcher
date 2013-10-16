@@ -2,8 +2,10 @@
 
 #include <algorithm>
 #include <enumerate.hpp>
+#include <ImageIrrAdapter.h>
+#include <FakeFullScreen.h>
 
-Level2Menu::Level2Menu(int priority) : m_Priority(priority), m_Titles(config::menu::NumOfMenuItems), m_Bar(priority+1){
+Level2Menu::Level2Menu(int priority) : m_Priority(priority), m_Titles(config::menu::NumOfMenuItems), m_Bar(priority+1), m_Decoder(300, 225){
 	using namespace config;
 
 	std::for_each(m_Backgrounds.begin(), m_Backgrounds.end(), [&](Sprite & back){
@@ -20,6 +22,9 @@ Level2Menu::Level2Menu(int priority) : m_Priority(priority), m_Titles(config::me
 	m_Select.setPosition(Glas::Vector2i(menu::X, menu::Y+menu::SelectItemOrder*menu::ItemHeight));
 
 	m_SelectGameInfo.setPriority(3);
+
+	m_Movie.setPriority(4);
+	m_Movie.setPosition(Glas::Vector2i(22, 102));
 }
 
 
@@ -46,9 +51,11 @@ void Level2Menu::addSelectItemUpdate(){
 	auto path = m_GameList[m_CurrentIndex].getInfoImagePath();
 	tString tPath(path.begin(), path.end());
 	m_SelectGameInfo.setResouceName(tPath);
-	m_SelectGameLerp = LerpAnimation(config::menu::Delay, 0, 20, []() -> double{
+	m_SelectGameLerp = LerpAnimation(config::menu::Delay, 0, 20, [this]() -> double{
+		this->m_Decoder.open(this->m_GameList[this->m_CurrentIndex].getSampleVideoPath());
 		return 0;
 	});
+
 }
 
 
@@ -96,11 +103,29 @@ void Level2Menu::prev(){
 }
 
 
-std::shared_ptr<IScene> Level2Menu::select(){
-	//auto path = "\"" + m_GameList[m_CurrentIndex].getGameExeFilePath() + "\"";
-	//system(path.c_str());
-	//system("C:\\notepad.exe");
-	return nullptr;
+void Level2Menu::select(){
+	STARTUPINFO				si;
+	PROCESS_INFORMATION		pi;
+	ZeroMemory(&si, sizeof(STARTUPINFO));
+	ZeroMemory(&pi, sizeof(PROCESS_INFORMATION));
+
+
+	//	ProcessçÏê¨
+	auto path = m_GameList[m_CurrentIndex].getGameExeFilePath();
+	tString tPath(path.begin(), path.end());
+	if(CreateProcess(tPath.c_str(), NULL, NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi) == false){
+		return;
+	}
+	//GetSingleton<IrrApp>()->accessDevice()->minimizeWindow();
+	WaitForSingleObject(pi.hProcess, INFINITE);
+	//GetSingleton<IrrApp>()->accessDevice()->restoreWindow();
+	fakeFullScreen(GetSingleton<IrrApp>()->accessHWND(), config::Width, config::Height);
+
+	
+	CloseHandle(pi.hThread);
+	CloseHandle(pi.hProcess);
+
+	return;
 }
 
 void Level2Menu::draw(){
@@ -129,4 +154,14 @@ void Level2Menu::draw(){
 		m_SelectGameInfo.setPosition(Glas::Vector2i(20+animated_pixel, 100));
 		m_SelectGameInfo.draw();
 	}
+	/*
+	{
+		if(m_Decoder.refresh()){
+			m_Movie.setResouce(m_Decoder.decode());
+			m_Movie.draw();
+		}else{
+			//m_Decoder.open(m_GameList[m_CurrentIndex].getSampleVideoPath());
+		//	m_Decoder.open(config::resource::IntroMovie);
+		}
+	}*/
 }

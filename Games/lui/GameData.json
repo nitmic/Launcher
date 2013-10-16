@@ -3,7 +3,7 @@
 		"menu" : "GameListMenu.png",
 		"info" : "Info.png",
 		"summary" : "Summary.png",
-		"sampleVideo" : "",
+		"sampleVideo" : "titan.ogg",
 		"sampleImages" : [""]
 	},
 	"genre": "Race",

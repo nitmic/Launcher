@@ -14,6 +14,8 @@
 #include "ScrollBar.h"
 #include "GameList.h"
 
+#include <MovieIrrAdapter.h>
+
 class IScene;
 
 class Level2Menu{
@@ -25,7 +27,7 @@ public:
 	void prev();
 
 	void draw();
-	std::shared_ptr<IScene> select();
+	void select();
 private:
 	void addSelectItemUpdate();
 	std::vector<GameData> m_GameList;
@@ -42,4 +44,7 @@ private:
 	
 	Sprite m_SelectGameInfo;
 	LerpAnimation m_SelectGameLerp;
+
+	Movie m_Decoder;
+	Sprite m_Movie;
 };

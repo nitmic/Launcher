@@ -17,6 +17,7 @@ public:
 	void draw();
 	bool isTransparency(){return false;};
 private:
-	Movie m_Intro;
+	Movie m_MovieDecoder;
+	Sprite m_Intro;
 	Joypad m_Joypad;
 };

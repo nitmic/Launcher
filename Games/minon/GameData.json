@@ -3,10 +3,10 @@
 		"menu" : "GameListMenu.png",
 		"info" : "Info.png",
 		"summary" : "Summary.png",
-		"sampleVideo" : "",
+		"sampleVideo" : "titan.ogg",
 		"sampleImages" : [""]
 	},
 	"genre": "Action",
-	"exe" : "Game.exe",
+	"exe" : "furfur2011.exe",
 	"numOfPersons" : [1,2]
 }
