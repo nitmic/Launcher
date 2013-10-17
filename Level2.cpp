@@ -77,6 +77,8 @@ void Level2::step(
 	if(j.getButton(AbsJoypad::A).isJustPressed() || GetSingleton<DXLib::DXKeyboard>()->isJustPressed(0x1C)){
 		__impl__->menu.select();
 	}
+
+	__impl__->menu.step();
 }
 
 void Level2::draw(){

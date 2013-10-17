@@ -15,6 +15,7 @@
 #include "GameList.h"
 
 #include <MovieIrrAdapter.h>
+#include <Delay.h>
 
 class IScene;
 
@@ -28,6 +29,7 @@ public:
 
 	void draw();
 	void select();
+	void step();
 private:
 	void addSelectItemUpdate();
 	std::vector<GameData> m_GameList;
@@ -45,6 +47,7 @@ private:
 	Sprite m_SelectGameInfo;
 	LerpAnimation m_SelectGameLerp;
 
-	Movie m_Decoder;
+	std::shared_ptr<Movie> m_Decoder;
 	Sprite m_Movie;
+	TUL::Delay m_MovieStartDelay;
 };

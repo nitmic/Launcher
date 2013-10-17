@@ -5,7 +5,7 @@
 #include <ImageIrrAdapter.h>
 #include <FakeFullScreen.h>
 
-Level2Menu::Level2Menu(int priority) : m_Priority(priority), m_Titles(config::menu::NumOfMenuItems), m_Bar(priority+1), m_Decoder(300, 225){
+Level2Menu::Level2Menu(int priority) : m_Priority(priority), m_Titles(config::menu::NumOfMenuItems), m_Bar(priority+1){
 	using namespace config;
 
 	std::for_each(m_Backgrounds.begin(), m_Backgrounds.end(), [&](Sprite & back){
@@ -52,12 +52,14 @@ void Level2Menu::addSelectItemUpdate(){
 	tString tPath(path.begin(), path.end());
 	m_SelectGameInfo.setResouceName(tPath);
 	m_SelectGameLerp = LerpAnimation(config::menu::Delay, 0, 20, [this]() -> double{
-		this->m_Decoder.open(this->m_GameList[this->m_CurrentIndex].getSampleVideoPath());
 		return 0;
 	});
-
+	
+	m_MovieStartDelay = TUL::Delay(config::menu::Delay+10 ,[this](){
+			this->m_Decoder = std::make_shared<Movie>(300, 225);
+			this->m_Decoder->open(this->m_GameList[this->m_CurrentIndex].getSampleVideoPath());
+	});
 }
-
 
 void Level2Menu::next(){
 	using namespace config;
@@ -71,7 +73,8 @@ void Level2Menu::next(){
 	title.setResouceName(tPath);
 	m_Titles.push_back(title);
 	m_CurrentIndex++;
-
+	
+	m_Decoder = nullptr;
 	m_Lerp = LerpAnimation(menu::Delay, -menu::ItemHeight, 0, [&, this]()->double{
 		this->m_Titles.pop_front();
 		return 0;
@@ -93,6 +96,7 @@ void Level2Menu::prev(){
 	m_Titles.push_front(title);
 	m_CurrentIndex--;
 
+	m_Decoder = nullptr;
 	m_Lerp = LerpAnimation(menu::Delay, 0, -menu::ItemHeight, [&, this]()->double{
 		this->m_Titles.pop_back();
 		return 0;
@@ -102,6 +106,20 @@ void Level2Menu::prev(){
 	m_Bar.setPosition((double)m_CurrentIndex/(double)m_GameList.size());
 }
 
+void Level2Menu::step(){
+	if(m_MovieStartDelay.isActive()) m_MovieStartDelay.step();
+	
+	{
+		if(m_Decoder==nullptr) return;
+		if(m_Decoder->refresh()){
+			m_Movie.setResouce(m_Decoder->decode());
+			m_Movie.draw();
+		}else{
+			m_Decoder = std::make_shared<Movie>(300, 250);
+			m_Decoder->open(m_GameList[m_CurrentIndex].getSampleVideoPath());
+		}
+	}
+}
 
 void Level2Menu::select(){
 	STARTUPINFO				si;
@@ -129,7 +147,6 @@ void Level2Menu::select(){
 }
 
 void Level2Menu::draw(){
-	
 	{
 		int animated_pixel = (m_Lerp.isAnimating()) ? m_Lerp.next() : 0;
 	
@@ -154,14 +171,4 @@ void Level2Menu::draw(){
 		m_SelectGameInfo.setPosition(Glas::Vector2i(20+animated_pixel, 100));
 		m_SelectGameInfo.draw();
 	}
-	/*
-	{
-		if(m_Decoder.refresh()){
-			m_Movie.setResouce(m_Decoder.decode());
-			m_Movie.draw();
-		}else{
-			//m_Decoder.open(m_GameList[m_CurrentIndex].getSampleVideoPath());
-		//	m_Decoder.open(config::resource::IntroMovie);
-		}
-	}*/
 }
