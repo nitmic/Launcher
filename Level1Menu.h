@@ -21,7 +21,7 @@ class IScene;
 class Level1Menu{
 public:
 	Level1Menu(int priority);
-	void addItem(tString itemImg_path, GameCategory func);
+	void addItem(tString itemImg_path, GameCategory func, tString infoImg_path=_T("blank.png"));
 
 	void next();
 	void prev();
@@ -29,7 +29,10 @@ public:
 	void draw();
 	std::shared_ptr<IScene> select();
 private:
+	void selectItemUpdate();
 	std::vector<GameCategory> m_Filters;
+	std::vector<tString> m_Info_Paths;
+
 	std::deque<Sprite> m_Titles;
 	std::vector<tString> m_Title_Paths;
 	std::array<Sprite, config::menu::NumOfMenuItems> m_Backgrounds;
@@ -39,4 +42,7 @@ private:
 	int m_Priority;
 	TUL::RingIndex m_CurrentIndex;
 	LerpAnimation lerp;
+
+	Sprite m_Info;
+	LerpAnimation m_InfoLerp;
 };

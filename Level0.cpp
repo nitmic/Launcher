@@ -6,6 +6,7 @@
 #include <Camera.h>
 #include <CameraIrrAdapter.hpp>
 #include <lightIrrAdapter.h>
+#include <Delay.h>
 
 #include "Marquee.h"
 
@@ -21,6 +22,9 @@ struct Level0::Impl{
 
 	Drawer3DImpl object3d;
 	Camera<DefaultCamera> camera;
+
+	Sprite keyInfo;
+	TUL::Delay keyInfoAnimation;
 };
 
 Level0::Level0(){
@@ -50,9 +54,26 @@ Level0::Level0(){
 	__impl__->object3d.setResouceName(resource::SpaceStation);
 	__impl__->object3d.setPosition(Glas::Vector3f(-10,-50,70));
 	__impl__->object3d.setScale(0.02f);
+	
+	__impl__->keyInfo.setPosition(Glas::Vector2i(450,0));
+	__impl__->keyInfo.setPriority(9);
+	setKeyInfoAnimation();
+}
+void Level0::setKeyInfoAnimation(){
+	__impl__->keyInfo.setResouceName(_T("./Image/keyInfo_Off.png"));
+	__impl__->keyInfoAnimation = TUL::Delay(30, [this](){
+		this->__impl__->keyInfo.setResouceName(_T("./Image/keyInfo_On.png"));
+		auto my = this;
+		__impl__->keyInfoAnimation = TUL::Delay(30, [my](){
+			my->setKeyInfoAnimation();
+		});
+	});
 }
 
 void Level0::draw(){
+	__impl__->keyInfoAnimation.step();
+	__impl__->keyInfo.draw();
+
 	Glas::Vector3f p = __impl__->camera.getPosition() + Glas::Vector3f(0, -0.1, 0.15);
 	__impl__->camera.setPosition(p);
 

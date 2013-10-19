@@ -26,7 +26,7 @@ namespace{
 			const tString SpaceStation = _T("./Mesh/taka2.x");
 			const std::string IntroMovie = "./Movie/titan.ogg";
 		};
-
+		
 		namespace title{
 			const int X = 375;
 			const int Y = 55;
@@ -37,6 +37,18 @@ namespace{
 				const tString TwoPlayer = _T("./Image/Title/2PlayerGame.png");
 				const tString ThreePlayer = _T("./Image/Title/3PlayerGame.png");
 				const tString FourPlayer = _T("./Image/Title/4PlayerGame.png");
+			};
+		};
+
+		namespace info{
+			const int X = 20;
+			const int Y = 100;
+			namespace resource{
+				const tString AllGames = _T("./Image/Menu/Info_AllGames.png");
+				const tString OnePlayer = _T("./Image/Menu/Info_1Player.png");
+				const tString TwoPlayer = _T("./Image/Menu/Info_2Player.png");
+				const tString ThreePlayer = _T("./Image/Menu/Info_3Player.png");
+				const tString FourPlayer = _T("./Image/Menu/Info_4Player.png");
 			};
 		};
 

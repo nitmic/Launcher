@@ -21,10 +21,16 @@ Level2Menu::Level2Menu(int priority) : m_Priority(priority), m_Titles(config::me
 	m_Select.setPriority(m_Priority+1);
 	m_Select.setPosition(Glas::Vector2i(menu::X, menu::Y+menu::SelectItemOrder*menu::ItemHeight));
 
-	m_SelectGameInfo.setPriority(3);
+	m_SelectGameInfo.setPriority(4);
+	
+	auto image = std::make_shared<Image>();
+	m_MoviePlayer =Movie(image, 300, 225);
+	m_Movie.setResouce(image);
+	m_Movie.setPriority(3);
+	m_Movie.setPosition(Glas::Vector2i(info::X+2, info::Y+2));
 
-	m_Movie.setPriority(4);
-	m_Movie.setPosition(Glas::Vector2i(22, 102));
+	m_SelectSummary.setPosition(Glas::Vector2i(125,265));
+	m_SelectSummary.setPriority(4);
 }
 
 
@@ -40,11 +46,6 @@ void Level2Menu::addItem(GameData gameData){
 		title.setResouceName(tPath);
 	}));
 	addSelectItemUpdate();
-	/*
-	auto path = m_GameList[m_CurrentIndex].getInfoImagePath();
-	tString tPath(path.begin(), path.end());
-	m_SelectGameInfo.setResouceName(tPath);
-	*/
 }
 
 void Level2Menu::addSelectItemUpdate(){
@@ -55,9 +56,11 @@ void Level2Menu::addSelectItemUpdate(){
 		return 0;
 	});
 	
-	m_MovieStartDelay = TUL::Delay(config::menu::Delay+10 ,[this](){
-			this->m_Decoder = std::make_shared<Movie>(300, 225);
-			this->m_Decoder->open(this->m_GameList[this->m_CurrentIndex].getSampleVideoPath());
+	m_MovieStartDelay = TUL::Delay(config::menu::Delay+5 ,[this](){
+			this->m_MoviePlayer.open(this->m_GameList[this->m_CurrentIndex].getSampleVideoPath());
+			auto path = this->m_GameList[this->m_CurrentIndex].getSummaryImagePath();
+			tString tPath(path.begin(), path.end());
+			this->m_SelectSummary.setResouceName(tPath);
 	});
 }
 
@@ -74,7 +77,6 @@ void Level2Menu::next(){
 	m_Titles.push_back(title);
 	m_CurrentIndex++;
 	
-	m_Decoder = nullptr;
 	m_Lerp = LerpAnimation(menu::Delay, -menu::ItemHeight, 0, [&, this]()->double{
 		this->m_Titles.pop_front();
 		return 0;
@@ -96,7 +98,6 @@ void Level2Menu::prev(){
 	m_Titles.push_front(title);
 	m_CurrentIndex--;
 
-	m_Decoder = nullptr;
 	m_Lerp = LerpAnimation(menu::Delay, 0, -menu::ItemHeight, [&, this]()->double{
 		this->m_Titles.pop_back();
 		return 0;
@@ -109,15 +110,14 @@ void Level2Menu::prev(){
 void Level2Menu::step(){
 	if(m_MovieStartDelay.isActive()) m_MovieStartDelay.step();
 	
-	{
-		if(m_Decoder==nullptr) return;
-		if(m_Decoder->refresh()){
-			m_Movie.setResouce(m_Decoder->decode());
-			m_Movie.draw();
-		}else{
-			m_Decoder = std::make_shared<Movie>(300, 250);
-			m_Decoder->open(m_GameList[m_CurrentIndex].getSampleVideoPath());
-		}
+	if(!m_MoviePlayer.refresh()){
+		m_MoviePlayer.open(m_GameList[m_CurrentIndex].getSampleVideoPath());
+		return;
+	}
+	
+	if(!m_MovieStartDelay.isActive()){
+		m_Movie.draw();
+		m_SelectSummary.draw();
 	}
 }
 
@@ -168,7 +168,7 @@ void Level2Menu::draw(){
 
 	{
 		int animated_pixel = (m_SelectGameLerp.isAnimating()) ? m_SelectGameLerp.next() : 0;
-		m_SelectGameInfo.setPosition(Glas::Vector2i(20+animated_pixel, 100));
+		m_SelectGameInfo.setPosition(Glas::Vector2i(config::info::X+animated_pixel, config::info::Y));
 		m_SelectGameInfo.draw();
 	}
 }

@@ -14,6 +14,8 @@ public:
 	void draw();
 	bool isTransparency(){return false;};
 private:
+	void setKeyInfoAnimation();
+
 	struct Impl;
 	std::shared_ptr<Impl> __impl__;
 };

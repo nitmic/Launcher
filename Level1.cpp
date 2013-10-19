@@ -27,10 +27,10 @@ Level1::Level1(){
 
 	__impl__ = std::make_shared<Impl>();
 	__impl__->menu.addItem(resource::AllGames, AllGames());
-	__impl__->menu.addItem(resource::OnePlayer, OnePlayer());
-	__impl__->menu.addItem(resource::TwoPlayer, TwoPlayer());
-	__impl__->menu.addItem(resource::ThreePlayer, ThreePlayer());
-	__impl__->menu.addItem(resource::FourPlayer, FourPlayer());
+	__impl__->menu.addItem(resource::OnePlayer, OnePlayer(), config::info::resource::OnePlayer);
+	__impl__->menu.addItem(resource::TwoPlayer, TwoPlayer(), config::info::resource::TwoPlayer);
+	__impl__->menu.addItem(resource::ThreePlayer, ThreePlayer(), config::info::resource::ThreePlayer);
+	__impl__->menu.addItem(resource::FourPlayer, FourPlayer(), config::info::resource::FourPlayer);
 }
 
 void Level1::step(

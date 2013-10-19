@@ -23,10 +23,18 @@ Level1Menu::Level1Menu(int priority) : m_Priority(priority), m_Titles(config::me
 	m_Select.setPriority(m_Priority+1);
 	m_Select.setPosition(Glas::Vector2i(menu::X, menu::Y+menu::SelectItemOrder*menu::ItemHeight));
 	
+	m_Info.setPriority(4);
 }
 
-void Level1Menu::addItem(tString itemImg_path, GameCategory category){
+void Level1Menu::selectItemUpdate(){
+	m_Info.setResouceName(m_Info_Paths[m_CurrentIndex]);
+	m_InfoLerp = LerpAnimation(config::menu::Delay, 0, 20, [this]() -> double{
+		return 0;
+	});
+}
 
+void Level1Menu::addItem(tString itemImg_path, GameCategory category, tString infoImg_path){
+	m_Info_Paths.push_back(infoImg_path);
 	m_Filters.push_back(category);
 	m_Title_Paths.push_back(itemImg_path);
 
@@ -35,6 +43,8 @@ void Level1Menu::addItem(tString itemImg_path, GameCategory category){
 		using namespace config;
 		title.setResouceName(m_Title_Paths[m_CurrentIndex-menu::SelectItemOrder+i]);
 	}));
+	
+	selectItemUpdate();
 }
 
 void Level1Menu::next(){
@@ -50,7 +60,8 @@ void Level1Menu::next(){
 		this->m_Titles.pop_front();
 		return 0;
 	});
-
+	
+	selectItemUpdate();
 	m_Bar.setPosition((double)m_CurrentIndex/(double)m_Filters.size());
 }
 
@@ -67,7 +78,8 @@ void Level1Menu::prev(){
 		this->m_Titles.pop_back();
 		return 0;
 	});
-
+	
+	selectItemUpdate();
 	m_Bar.setPosition((double)m_CurrentIndex/(double)m_Filters.size());
 }
 
@@ -94,4 +106,11 @@ void Level1Menu::draw(){
 	
 	m_Bar.draw();
 	m_Select.draw();
+
+	
+	{
+		int animated_pixel = (m_InfoLerp.isAnimating()) ? m_InfoLerp.next() : 0;
+		m_Info.setPosition(Glas::Vector2i(config::info::X+animated_pixel, config::info::Y));
+		m_Info.draw();
+	}
 }

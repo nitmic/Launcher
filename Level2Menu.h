@@ -47,7 +47,9 @@ private:
 	Sprite m_SelectGameInfo;
 	LerpAnimation m_SelectGameLerp;
 
-	std::shared_ptr<Movie> m_Decoder;
+	Movie m_MoviePlayer;
 	Sprite m_Movie;
 	TUL::Delay m_MovieStartDelay;
+
+	Sprite m_SelectSummary;
 };
