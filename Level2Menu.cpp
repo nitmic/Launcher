@@ -127,6 +127,8 @@ void Level2Menu::select(){
 	ZeroMemory(&si, sizeof(STARTUPINFO));
 	ZeroMemory(&pi, sizeof(PROCESS_INFORMATION));
 
+	
+	restoreFakeFullScreen(GetSingleton<IrrApp>()->accessHWND());
 
 	//	ProcessçÏê¨
 	auto path = m_GameList[m_CurrentIndex].getGameExeFilePath();
