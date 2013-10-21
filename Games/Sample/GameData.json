@@ -6,7 +6,7 @@
 		"sampleVideo" : "titan.ogg",
 		"sampleImages" : [""]
 	},
-	"genre": "Party",
-	"exe" : "exe/NitmicBrothers.exe",
-	"numOfPersons" : [2,3,4]
+	"genre": ["Action"],
+	"exe" : "CyberForth.exe",
+	"numOfPersons" : [1]
 }

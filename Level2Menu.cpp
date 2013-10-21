@@ -5,6 +5,8 @@
 #include <ImageIrrAdapter.h>
 #include <FakeFullScreen.h>
 
+#include <boost/filesystem/path.hpp>
+
 Level2Menu::Level2Menu(int priority) : m_Priority(priority), m_Titles(config::menu::NumOfMenuItems), m_Bar(priority+1){
 	using namespace config;
 
@@ -133,12 +135,15 @@ void Level2Menu::select(){
 	//	ProcessçÏê¨
 	auto path = m_GameList[m_CurrentIndex].getGameExeFilePath();
 	tString tPath(path.begin(), path.end());
-	if(CreateProcess(tPath.c_str(), NULL, NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi) == false){
+	tString dirPath = boost::filesystem::path(tPath).parent_path().c_str();
+
+	if(CreateProcess(tPath.c_str(), NULL, NULL, NULL, FALSE, 0, NULL, dirPath.c_str(), &si, &pi) == false){
 		return;
 	}
-	//GetSingleton<IrrApp>()->accessDevice()->minimizeWindow();
+
+	GetSingleton<IrrApp>()->accessDevice()->minimizeWindow();
 	WaitForSingleObject(pi.hProcess, INFINITE);
-	//GetSingleton<IrrApp>()->accessDevice()->restoreWindow();
+	GetSingleton<IrrApp>()->accessDevice()->restoreWindow();
 	fakeFullScreen(GetSingleton<IrrApp>()->accessHWND(), config::Width, config::Height);
 
 	

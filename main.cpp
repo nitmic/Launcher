@@ -16,6 +16,7 @@ int main()
 {
 	auto app = GetSingleton<IrrApp>();
 	if(!app->Setup(config::Width, config::Height)) return 1;
+	app->accessDevice()->getCursorControl()->setVisible(false);
 	fakeFullScreen(app->accessHWND(), config::Width, config::Height);
 
 	//Joypad & sound—p
@@ -24,12 +25,12 @@ int main()
 		if(!GetSingleton<DXLib::DXManager>()->Setup(hWnd, config::Width, config::Height, true)) return 1;
 		if(!GetSingleton<DXLib::DXInput>()->Setup(hInst, hWnd)) return 1;
 	}
-	GameListInit("./Games");
+	GameListInit("Games");
 	
 	GameLoop gameLoop(std::make_shared<IntroScene>());
 	app->setOnFrameUpdate([&]()->bool{
 		GetSingleton<DXLib::DXInput>()->Update();
-		if(GetSingleton<DXLib::DXKeyboard>()->isJustPressed(0x01)) exit(1); 
+		if(GetSingleton<DXLib::DXKeyboard>()->isJustPressed(0x01)) return false; 
 		return gameLoop.update();
 	});
 	app->setOnFrameDraw([&](){
@@ -37,5 +38,6 @@ int main()
 	});
 
 	app->AppLoop();
+
 	return 0;
 }

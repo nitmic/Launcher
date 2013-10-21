@@ -27,7 +27,7 @@ void GameListInit(const std::string dir){
 		auto json = std::make_shared<picojson::value>();
 		picojson::parse(*json, ifs);
 		
-		g_GameList.push_back(GameData(json, it->path().string()));
+		g_GameList.push_back(GameData(json, boost::filesystem::absolute(it->path().string()).string()));
 	}
 }
 
