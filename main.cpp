@@ -17,7 +17,7 @@ int main()
 	auto app = GetSingleton<IrrApp>();
 	if(!app->Setup(config::Width, config::Height)) return 1;
 	app->accessDevice()->getCursorControl()->setVisible(false);
-	fakeFullScreen(app->accessHWND(), config::Width, config::Height);
+	TUL::fakeFullScreen(app->accessHWND(), config::Width, config::Height);
 
 	//Joypad & sound—p
 	{

@@ -43,39 +43,33 @@ void Level2Menu::addItem(GameData gameData){
 
 	std::for_each(m_Titles.begin(), m_Titles.end(), TUL::enumerate<void>([&,this](Sprite & title, int i){
 		using namespace config;
-		auto path = m_GameList[m_CurrentIndex-menu::SelectItemOrder+i].getMenuImagePath();
-		tString tPath(path.begin(), path.end());
-		title.setResouceName(tPath);
+		title.setResouceName(TUL::to_tstring(m_GameList[m_CurrentIndex-menu::SelectItemOrder+i].getMenuImagePath()));
 	}));
 	addSelectItemUpdate();
 }
 
 void Level2Menu::addSelectItemUpdate(){
-	auto path = m_GameList[m_CurrentIndex].getInfoImagePath();
-	tString tPath(path.begin(), path.end());
-	m_SelectGameInfo.setResouceName(tPath);
+	m_SelectGameInfo.setResouceName(TUL::to_tstring(m_GameList[m_CurrentIndex].getInfoImagePath()));
 	m_SelectGameLerp = LerpAnimation(config::menu::Delay, 0, 20, [this]() -> double{
 		return 0;
 	});
 	
 	m_MovieStartDelay = TUL::Delay(config::menu::Delay+5 ,[this](){
 			this->m_MoviePlayer.open(this->m_GameList[this->m_CurrentIndex].getSampleVideoPath());
-			auto path = this->m_GameList[this->m_CurrentIndex].getSummaryImagePath();
-			tString tPath(path.begin(), path.end());
-			this->m_SelectSummary.setResouceName(tPath);
+			this->m_SelectSummary.setResouceName(TUL::to_tstring(
+				this->m_GameList[this->m_CurrentIndex].getSummaryImagePath()
+			));
 	});
 }
 
 void Level2Menu::next(){
 	using namespace config;
-
-	auto data = m_GameList[m_CurrentIndex+(menu::LastItemOrder-menu::SelectItemOrder)+1];
-	auto path = data.getMenuImagePath();
-	tString tPath(path.begin(), path.end());
-
+	
 	Sprite title;
 	title.setPriority(m_Priority);
-	title.setResouceName(tPath);
+	title.setResouceName(TUL::to_tstring(
+		m_GameList[m_CurrentIndex+(menu::LastItemOrder-menu::SelectItemOrder)+1].getMenuImagePath()
+	));
 	m_Titles.push_back(title);
 	m_CurrentIndex++;
 	
@@ -91,12 +85,9 @@ void Level2Menu::next(){
 void Level2Menu::prev(){
 	using namespace config;
 
-	auto path = m_GameList[m_CurrentIndex-menu::SelectItemOrder-1].getMenuImagePath();
-	tString tPath(path.begin(), path.end());
-
 	Sprite title;
 	title.setPriority(m_Priority);
-	title.setResouceName(tPath);
+	title.setResouceName(TUL::to_tstring(m_GameList[m_CurrentIndex-menu::SelectItemOrder-1].getMenuImagePath()));
 	m_Titles.push_front(title);
 	m_CurrentIndex--;
 
@@ -130,12 +121,11 @@ void Level2Menu::select(){
 	ZeroMemory(&pi, sizeof(PROCESS_INFORMATION));
 
 	
-	restoreFakeFullScreen(GetSingleton<IrrApp>()->accessHWND());
+	TUL::restoreFakeFullScreen(GetSingleton<IrrApp>()->accessHWND());
 
 	//	ProcessçÏê¨
-	auto path = m_GameList[m_CurrentIndex].getGameExeFilePath();
-	tString tPath(path.begin(), path.end());
-	tString dirPath = boost::filesystem::path(tPath).parent_path().c_str();
+	TUL::tString tPath = TUL::to_tstring(m_GameList[m_CurrentIndex].getGameExeFilePath());
+	TUL::tString dirPath = boost::filesystem::path(tPath).parent_path().c_str();
 
 	if(CreateProcess(tPath.c_str(), NULL, NULL, NULL, FALSE, 0, NULL, dirPath.c_str(), &si, &pi) == false){
 		return;
@@ -144,7 +134,7 @@ void Level2Menu::select(){
 	GetSingleton<IrrApp>()->accessDevice()->minimizeWindow();
 	WaitForSingleObject(pi.hProcess, INFINITE);
 	GetSingleton<IrrApp>()->accessDevice()->restoreWindow();
-	fakeFullScreen(GetSingleton<IrrApp>()->accessHWND(), config::Width, config::Height);
+	TUL::fakeFullScreen(GetSingleton<IrrApp>()->accessHWND(), config::Width, config::Height);
 
 	
 	CloseHandle(pi.hThread);

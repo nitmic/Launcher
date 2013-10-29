@@ -1,15 +1,15 @@
 #pragma once
 #include <functional>
-#include <tString.h>
+#include <tString.hpp>
 class GameData;
 
 class GameCategory{
 public:
 	std::function<bool(GameData)> getFilter();
-	tString getTitleImage_Path();
+	TUL::tString getTitleImage_Path();
 protected:
 	std::function<bool(GameData)> filter;
-	tString titleImage_path;
+	TUL::tString titleImage_path;
 };
 
 struct AllGames : public GameCategory{

@@ -4,7 +4,7 @@
 #include <vector>
 #include <functional>
 
-#include <tString.h>
+#include <tString.hpp>
 #include <RingIndex.h>
 #include <LerpAnimation.h>
 
@@ -21,7 +21,7 @@ class IScene;
 class Level1Menu{
 public:
 	Level1Menu(int priority);
-	void addItem(tString itemImg_path, GameCategory func, tString infoImg_path=_T("blank.png"));
+	void addItem(TUL::tString itemImg_path, GameCategory func, TUL::tString infoImg_path=_T("blank.png"));
 
 	void next();
 	void prev();
@@ -31,10 +31,10 @@ public:
 private:
 	void selectItemUpdate();
 	std::vector<GameCategory> m_Filters;
-	std::vector<tString> m_Info_Paths;
+	std::vector<TUL::tString> m_Info_Paths;
 
 	std::deque<Sprite> m_Titles;
-	std::vector<tString> m_Title_Paths;
+	std::vector<TUL::tString> m_Title_Paths;
 	std::array<Sprite, config::menu::NumOfMenuItems> m_Backgrounds;
 	Sprite m_Select;
 	ScrollBar m_Bar;

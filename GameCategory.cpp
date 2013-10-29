@@ -7,7 +7,7 @@ std::function<bool(GameData)> GameCategory::getFilter(){
 	return filter;
 }
 
-tString GameCategory::getTitleImage_Path(){
+TUL::tString GameCategory::getTitleImage_Path(){
 	return titleImage_path;
 }
 

@@ -33,7 +33,7 @@ void Level1Menu::selectItemUpdate(){
 	});
 }
 
-void Level1Menu::addItem(tString itemImg_path, GameCategory category, tString infoImg_path){
+void Level1Menu::addItem(TUL::tString itemImg_path, GameCategory category, TUL::tString infoImg_path){
 	m_Info_Paths.push_back(infoImg_path);
 	m_Filters.push_back(category);
 	m_Title_Paths.push_back(itemImg_path);

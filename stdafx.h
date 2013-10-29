@@ -11,7 +11,7 @@ enum SceneName{
 	TopMenu
 };
 
-#include <tString.h>
+#include <tString.hpp>
 namespace{
 	namespace config{
 		const int Width = 800;
@@ -19,11 +19,11 @@ namespace{
 		const std::string SettingFileName = "GameData.json";
 		
 		namespace resource{
-			const tString Background = _T("./Image/Background/Background.png");
-			const tString MovieBack = _T("./Image/Background/Background_movie.png");
-			const tString SummaryBack = _T("./Image/Background/Background_summary.png");
-			const tString Belt = _T("./Image/Background/Belt.png");
-			const tString SpaceStation = _T("./Mesh/taka2.x");
+			const TUL::tString Background = _T("./Image/Background/Background.png");
+			const TUL::tString MovieBack = _T("./Image/Background/Background_movie.png");
+			const TUL::tString SummaryBack = _T("./Image/Background/Background_summary.png");
+			const TUL::tString Belt = _T("./Image/Background/Belt.png");
+			const TUL::tString SpaceStation = _T("./Mesh/taka2.x");
 			const std::string IntroMovie = "./Movie/titan.ogg";
 		};
 		
@@ -31,12 +31,12 @@ namespace{
 			const int X = 375;
 			const int Y = 55;
 			namespace resource{
-				const tString Title = _T("./Image/Title/GameSelect.png");
-				const tString AllGames = _T("./Image/Title/AllGames.png");
-				const tString OnePlayer = _T("./Image/Title/1PlayerGame.png");
-				const tString TwoPlayer = _T("./Image/Title/2PlayerGame.png");
-				const tString ThreePlayer = _T("./Image/Title/3PlayerGame.png");
-				const tString FourPlayer = _T("./Image/Title/4PlayerGame.png");
+				const TUL::tString Title = _T("./Image/Title/GameSelect.png");
+				const TUL::tString AllGames = _T("./Image/Title/AllGames.png");
+				const TUL::tString OnePlayer = _T("./Image/Title/1PlayerGame.png");
+				const TUL::tString TwoPlayer = _T("./Image/Title/2PlayerGame.png");
+				const TUL::tString ThreePlayer = _T("./Image/Title/3PlayerGame.png");
+				const TUL::tString FourPlayer = _T("./Image/Title/4PlayerGame.png");
 			};
 		};
 
@@ -44,11 +44,11 @@ namespace{
 			const int X = 20;
 			const int Y = 100;
 			namespace resource{
-				const tString AllGames = _T("./Image/Menu/Info_AllGames.png");
-				const tString OnePlayer = _T("./Image/Menu/Info_1Player.png");
-				const tString TwoPlayer = _T("./Image/Menu/Info_2Player.png");
-				const tString ThreePlayer = _T("./Image/Menu/Info_3Player.png");
-				const tString FourPlayer = _T("./Image/Menu/Info_4Player.png");
+				const TUL::tString AllGames = _T("./Image/Menu/Info_AllGames.png");
+				const TUL::tString OnePlayer = _T("./Image/Menu/Info_1Player.png");
+				const TUL::tString TwoPlayer = _T("./Image/Menu/Info_2Player.png");
+				const TUL::tString ThreePlayer = _T("./Image/Menu/Info_3Player.png");
+				const TUL::tString FourPlayer = _T("./Image/Menu/Info_4Player.png");
 			};
 		};
 
@@ -67,22 +67,22 @@ namespace{
 				const int X = 765;
 				const int Height = 420;
 				namespace resource{
-					const tString ScrollButton = _T("./Image/Menu/ScrollButton.png");
-					const tString ScrollBar = _T("./Image/Menu/ScrollBar.png");
+					const TUL::tString ScrollButton = _T("./Image/Menu/ScrollButton.png");
+					const TUL::tString ScrollBar = _T("./Image/Menu/ScrollBar.png");
 				};
 			};
 
 			namespace resource{
-				const tString AllGames = _T("./Image/Menu/Category_ALLGames.png");
-				const tString OnePlayer = _T("./Image/Menu/Category_1Player.png");
-				const tString TwoPlayer = _T("./Image/Menu/Category_2Player.png");
-				const tString ThreePlayer = _T("./Image/Menu/Category_3Player.png");
-				const tString FourPlayer = _T("./Image/Menu/Category_4Player.png");
+				const TUL::tString AllGames = _T("./Image/Menu/Category_ALLGames.png");
+				const TUL::tString OnePlayer = _T("./Image/Menu/Category_1Player.png");
+				const TUL::tString TwoPlayer = _T("./Image/Menu/Category_2Player.png");
+				const TUL::tString ThreePlayer = _T("./Image/Menu/Category_3Player.png");
+				const TUL::tString FourPlayer = _T("./Image/Menu/Category_4Player.png");
 
-				const tString Back_category = _T("./Image/Menu/Background_category.png");
-				const tString Back_player = _T("./Image/Menu/Background_player.png");
-				const tString Back_game = _T("./Image/Menu/Background_game.png");
-				const tString Select = _T("./Image/Menu/Select.png");
+				const TUL::tString Back_category = _T("./Image/Menu/Background_category.png");
+				const TUL::tString Back_player = _T("./Image/Menu/Background_player.png");
+				const TUL::tString Back_game = _T("./Image/Menu/Background_game.png");
+				const TUL::tString Select = _T("./Image/Menu/Select.png");
 			};
 		}
 
@@ -93,7 +93,7 @@ namespace{
 			
 			const int Width = 1224;
 			namespace resource{
-				const tString Marquee = _T("./Image/Marquee.png");
+				const TUL::tString Marquee = _T("./Image/Marquee.png");
 			};
 		};
 	};
