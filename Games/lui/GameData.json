@@ -7,6 +7,6 @@
 		"sampleImages" : [""]
 	},
 	"genre": "Race",
-	"exe" : "Game.exe",
+	"exe" : "exe/NitmicBrothers.exe",
 	"numOfPersons" : [2,3,4]
 }

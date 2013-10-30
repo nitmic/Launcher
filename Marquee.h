@@ -1,5 +1,5 @@
 #pragma once
-#include <tString.h>
+#include <tString.hpp>
 #include <SpriteIrrAdapter.h>
 #include <LerpAnimation.h>
 #include <array>

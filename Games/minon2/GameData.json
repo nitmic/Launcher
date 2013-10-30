@@ -1,0 +1,12 @@
+{
+	"resource": {
+		"menu" : "GameListMenu.png",
+		"info" : "Info.png",
+		"summary" : "Summary.png",
+		"sampleVideo" : "titan.ogg",
+		"sampleImages" : [""]
+	},
+	"genre" : ["Party"],
+	"exe" : "teaparty.exe",
+	"numOfPersons" : [2,3,4]
+}

@@ -9,6 +9,10 @@
 
 #include <ImageIrrAdapter.h>
 
+// debug
+#include <Singleton.hpp>
+#include <DXKeyboard.h>
+
 IntroScene::IntroScene() : m_Joypad(0){
 	using namespace config;
 
@@ -21,7 +25,7 @@ IntroScene::IntroScene() : m_Joypad(0){
 void IntroScene::step(SceneHandler * sceneStack){
 	m_Joypad.update();
 	
-	if((!m_MoviePlayer.refresh()) || m_Joypad.getButton(AbsJoypad::A).isJustPressed()){
+	if((!m_MoviePlayer.refresh()) || m_Joypad.getButton(AbsJoypad::A).isJustPressed() || GetSingleton<DXLib::DXKeyboard>()->isJustPressed(0x1C)){
 		sceneStack->setNextScene(std::make_shared<Level0>());
 		sceneStack->setNextScene(std::make_shared<Level1>());
 		sceneStack->saveSceneStack(SceneName::TopMenu);

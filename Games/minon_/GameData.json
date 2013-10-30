@@ -1,0 +1,12 @@
+{
+	"resource": {
+		"menu" : "GameListMenu.png",
+		"info" : "Info.png",
+		"summary" : "Summary.png",
+		"sampleVideo" : "titan.ogg",
+		"sampleImages" : [""]
+	},
+	"genre": "Action",
+	"exe" : "furfur2011.exe",
+	"numOfPersons" : [1,2]
+}

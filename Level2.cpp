@@ -18,6 +18,8 @@
 #include <Singleton.hpp>
 #include <DXKeyboard.h>
 
+#include <Music.h>
+
 
 struct Level2::Impl{
 	Impl(int priority) : joypad(0), menu(priority){}
@@ -26,6 +28,7 @@ struct Level2::Impl{
 
 	Sprite title;
 	LerpAnimation lerp;
+	SDLAdapter::GameSE cursor;
 };
 
 Level2::Level2(GameCategory category, int priority) : m_Priority(priority) {
@@ -45,6 +48,9 @@ Level2::Level2(GameCategory category, int priority) : m_Priority(priority) {
 void Level2::step(
 	SceneHandler * sceneStack
 ){
+	__impl__->menu.step();
+
+
 	using namespace config;
 
 	auto & j = __impl__->joypad;
@@ -66,19 +72,20 @@ void Level2::step(
 
 
 	if(j.getButton(AbsJoypad::Up).isPressed() || GetSingleton<DXLib::DXKeyboard>()->isPressed(0x25)){
+		__impl__->cursor.ring(_T("./Sound/guard.wav"));
 		__impl__->menu.next();
 		sceneStack->setNextScene(std::make_shared<WaitScene>(menu::Delay));
 	}else if(j.getButton(AbsJoypad::Down).isPressed() || GetSingleton<DXLib::DXKeyboard>()->isPressed(0x24)){
+		__impl__->cursor.ring(_T("./Sound/guard.wav"));
 		__impl__->menu.prev();
 		sceneStack->setNextScene(std::make_shared<WaitScene>(menu::Delay));
 	}
-	
 
 	if(j.getButton(AbsJoypad::A).isJustPressed() || GetSingleton<DXLib::DXKeyboard>()->isJustPressed(0x1C)){
 		__impl__->menu.select();
+		sceneStack->setNextScene(std::make_shared<WaitScene>(config::menu::SceneTransDelay*2/3));
+		j.update();
 	}
-
-	__impl__->menu.step();
 }
 
 void Level2::draw(){

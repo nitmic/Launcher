@@ -5,7 +5,7 @@
 #include <vector>
 #include <functional>
 
-#include <tString.h>
+#include <tString.hpp>
 #include <RingIndex.h>
 #include <LerpAnimation.h>
 

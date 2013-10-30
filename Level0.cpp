@@ -7,6 +7,7 @@
 #include <CameraIrrAdapter.hpp>
 #include <lightIrrAdapter.h>
 #include <Delay.h>
+#include <Music.h>
 
 #include "Marquee.h"
 
@@ -23,14 +24,15 @@ struct Level0::Impl{
 	Drawer3DImpl object3d;
 	Camera<DefaultCamera> camera;
 
+	std::shared_ptr<SDLAdapter::Tune> bgm;
 	Sprite keyInfo;
 	TUL::Delay keyInfoAnimation;
 };
 
 Level0::Level0(){
 	using namespace config;
-
 	__impl__ = std::make_shared<Impl>();
+	__impl__->bgm = std::make_shared<SDLAdapter::Tune>(_T("./Sound/SelectMenu.wav"));
 	__impl__->background.setResouceName(
 		resource::Background,
 		resource::Background,
@@ -39,7 +41,7 @@ Level0::Level0(){
 		resource::Background,
 		resource::Background
 	);
-	
+
 	__impl__->summaryBack.setResouceName(resource::SummaryBack);
 	__impl__->summaryBack.setPriority(0);
 	__impl__->summaryBack.setPosition(Glas::Vector2i(125,265));
@@ -71,6 +73,7 @@ void Level0::setKeyInfoAnimation(){
 }
 
 void Level0::draw(){
+	SDLAdapter::ReserveTune(__impl__->bgm);
 	__impl__->keyInfoAnimation.step();
 	__impl__->keyInfo.draw();
 

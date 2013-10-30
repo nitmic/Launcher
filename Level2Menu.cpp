@@ -6,6 +6,7 @@
 #include <FakeFullScreen.h>
 
 #include <boost/filesystem/path.hpp>
+#include <Music.h>
 
 Level2Menu::Level2Menu(int priority) : m_Priority(priority), m_Titles(config::menu::NumOfMenuItems), m_Bar(priority+1){
 	using namespace config;
@@ -115,6 +116,9 @@ void Level2Menu::step(){
 }
 
 void Level2Menu::select(){
+	SDLAdapter::ReserveTune(std::make_shared<SDLAdapter::Silent>());
+	SDLAdapter::PlayTune();
+
 	STARTUPINFO				si;
 	PROCESS_INFORMATION		pi;
 	ZeroMemory(&si, sizeof(STARTUPINFO));

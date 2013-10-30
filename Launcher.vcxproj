@@ -50,13 +50,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../TUL;../DXLibCore;../GameBaseLib;C:\Boost\boost_1_53_0;C:\irrlicht-1.8\include;C:\FFMpeg\include;$(DXSDK_DIR)Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\SDL2\include;../TUL;../DXLibCore;../GameBaseLib;C:\Boost\boost_1_53_0;C:\irrlicht-1.8\include;C:\FFMpeg\include;$(DXSDK_DIR)Include</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\FFMpeg\lib;C:\irrlicht-1.8\lib\Win32-visualStudio;$(DXSDK_DIR)Lib\x86;C:\Boost\boost_1_53_0\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\SDL2\lib\x86;C:\FFMpeg\lib;C:\irrlicht-1.8\lib\Win32-visualStudio;$(DXSDK_DIR)Lib\x86;C:\Boost\boost_1_53_0\lib</AdditionalLibraryDirectories>
       <ForceFileOutput>MultiplyDefinedSymbolOnly</ForceFileOutput>
     </Link>
   </ItemDefinitionGroup>

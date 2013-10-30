@@ -15,10 +15,13 @@
 #include <Singleton.hpp>
 #include <DXKeyboard.h>
 
+#include <Music.h>
+
 struct Level1::Impl{
 	Impl() : joypad(0), menu(0){}
 	Level1Menu menu;
 	Joypad joypad;
+	SDLAdapter::GameSE cursor;
 };
 
 
@@ -51,9 +54,11 @@ void Level1::step(
 	sceneStack->setNextScene(sceneStack->getCurrentScene());
 
 	if(__impl__->joypad.getButton(AbsJoypad::Up).isPressed() || GetSingleton<DXLib::DXKeyboard>()->isPressed(0x25)){
+		__impl__->cursor.ring(_T("./Sound/guard.wav"));
 		__impl__->menu.next();
 		sceneStack->setNextScene(std::make_shared<WaitScene>(Delay));
 	}else if(__impl__->joypad.getButton(AbsJoypad::Down).isPressed() || GetSingleton<DXLib::DXKeyboard>()->isPressed(0x24)){
+		__impl__->cursor.ring(_T("./Sound/guard.wav"));
 		__impl__->menu.prev();
 		sceneStack->setNextScene(std::make_shared<WaitScene>(Delay));
 	}
