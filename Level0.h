@@ -15,6 +15,7 @@ public:
 	bool isTransparency(){return false;};
 private:
 	void setKeyInfoAnimation();
+	void setCameraWork();
 
 	struct Impl;
 	std::shared_ptr<Impl> __impl__;

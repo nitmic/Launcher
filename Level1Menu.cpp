@@ -20,8 +20,8 @@ Level1Menu::Level1Menu(int priority) : m_Priority(priority), m_Titles(config::me
 	});
 
 	m_Select.setResouceName(menu::resource::Select);
-	m_Select.setPriority(m_Priority+1);
-	m_Select.setPosition(Glas::Vector2i(menu::X, menu::Y+menu::SelectItemOrder*menu::ItemHeight));
+	m_Select.setPriority(m_Priority);
+	m_Select.setPosition(Glas::Vector2i(menu::X+20, menu::Y+menu::SelectItemOrder*menu::ItemHeight));
 	
 	m_Info.setPriority(4);
 }
@@ -96,6 +96,8 @@ void Level1Menu::draw(){
 		title.setPosition(Glas::Vector2i(menu::X+30, menu::Y+i*menu::ItemHeight+animated_pixel));
 		title.draw();
 	}));
+
+	m_Select.draw();
 	
 	std::for_each(m_Backgrounds.begin(), m_Backgrounds.end(), TUL::enumerate<void>([&,this](Sprite & back, int i){
 		using namespace config;
@@ -105,7 +107,6 @@ void Level1Menu::draw(){
 	
 	
 	m_Bar.draw();
-	m_Select.draw();
 
 	
 	{

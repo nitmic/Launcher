@@ -8,9 +8,20 @@
 #include <lightIrrAdapter.h>
 #include <Delay.h>
 #include <Music.h>
+#include <MDA.h>
 
 #include "Marquee.h"
 
+struct Station : public I3DAgent{
+	Glas::Vector3f getPosition(){
+		return Glas::Vector3f(-10, -10, 70);
+	}
+	Glas::Quaternion getAttitude(){
+		return Glas::Quaternion(0, 1, 0, 1);
+	}
+	bool isAlive(){return true;}
+	void step(){};
+};
 
 struct Level0::Impl{
 	Impl() : marquee(9){}
@@ -22,11 +33,14 @@ struct Level0::Impl{
 	Marquee marquee;
 
 	Drawer3DImpl object3d;
-	Camera<DefaultCamera> camera;
+	std::shared_ptr<ICamera> camera;
 
 	std::shared_ptr<SDLAdapter::Tune> bgm;
 	Sprite keyInfo;
 	TUL::Delay keyInfoAnimation;
+
+	TUL::Delay cameraWorkRoutine;
+	std::function<void(void)> cameraWork;
 };
 
 Level0::Level0(){
@@ -60,7 +74,43 @@ Level0::Level0(){
 	__impl__->keyInfo.setPosition(Glas::Vector2i(450,0));
 	__impl__->keyInfo.setPriority(9);
 	setKeyInfoAnimation();
+	setCameraWork();
 }
+
+void Level0::setCameraWork(){
+	auto camera = std::make_shared<Camera<DefaultCamera>>();
+	__impl__->camera = camera;
+	camera->setPosition(Glas::Vector3f(0,0,0));
+	__impl__->cameraWork = [camera](){
+		Glas::Vector3f p = camera->getPosition() + Glas::Vector3f(0, -0.05, 0.075);
+		camera->setPosition(p);
+	};
+	__impl__->cameraWorkRoutine = TUL::Delay(600, [this](){
+		auto my = this;
+		auto camera = std::make_shared<Camera<TPSCamera>>();
+		camera->setTarget(std::make_shared<Station>());
+		camera->setDistance(60);
+		my->__impl__->camera = camera;
+		my->__impl__->cameraWork = [my,camera](){
+			camera->rotate(0.1, Glas::Vector3f(0, 1, 0.1));
+		};
+		my->__impl__->cameraWorkRoutine = TUL::Delay(600, [my](){
+			auto camera = std::make_shared<Camera<DefaultCamera>>();
+			camera->setPosition(Glas::Vector3f(0,-30,60));
+			my->__impl__->camera = camera;
+			my->__impl__->cameraWork = [camera](){
+				Glas::Vector3f p = camera->getPosition() + Glas::Vector3f(0, 0.015, -0.08);
+				camera->setPosition(p);
+			};
+
+			auto self = my;
+			my->__impl__->cameraWorkRoutine = TUL::Delay(1000, [self](){
+				self->setCameraWork();
+			});
+		});
+	});
+}
+
 void Level0::setKeyInfoAnimation(){
 	__impl__->keyInfo.setResouceName(_T("./Image/keyInfo_Off.png"));
 	__impl__->keyInfoAnimation = TUL::Delay(30, [this](){
@@ -77,10 +127,9 @@ void Level0::draw(){
 	__impl__->keyInfoAnimation.step();
 	__impl__->keyInfo.draw();
 
-	Glas::Vector3f p = __impl__->camera.getPosition() + Glas::Vector3f(0, -0.1, 0.15);
-	__impl__->camera.setPosition(p);
+	__impl__->cameraWork();
+	__impl__->camera->transform();
 
-	__impl__->camera.transform();
 	__impl__->object3d.draw();
 	__impl__->background.draw();
 	
@@ -91,4 +140,5 @@ void Level0::draw(){
 	__impl__->summaryBack.draw();
 	__impl__->movieBack.draw();
 
+	__impl__->cameraWorkRoutine.step();
 }

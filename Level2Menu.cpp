@@ -21,8 +21,8 @@ Level2Menu::Level2Menu(int priority) : m_Priority(priority), m_Titles(config::me
 	});
 
 	m_Select.setResouceName(menu::resource::Select);
-	m_Select.setPriority(m_Priority+1);
-	m_Select.setPosition(Glas::Vector2i(menu::X, menu::Y+menu::SelectItemOrder*menu::ItemHeight));
+	m_Select.setPriority(m_Priority);
+	m_Select.setPosition(Glas::Vector2i(menu::X+20, menu::Y+menu::SelectItemOrder*menu::ItemHeight));
 
 	m_SelectGameInfo.setPriority(4);
 	
@@ -131,9 +131,7 @@ void Level2Menu::select(){
 	TUL::tString tPath = TUL::to_tstring(m_GameList[m_CurrentIndex].getGameExeFilePath());
 	TUL::tString dirPath = boost::filesystem::path(tPath).parent_path().c_str();
 
-	if(CreateProcess(tPath.c_str(), NULL, NULL, NULL, FALSE, 0, NULL, dirPath.c_str(), &si, &pi) == false){
-		return;
-	}
+	assert(CreateProcess(tPath.c_str(), NULL, NULL, NULL, FALSE, 0, NULL, dirPath.c_str(), &si, &pi));
 
 	GetSingleton<IrrApp>()->accessDevice()->minimizeWindow();
 	WaitForSingleObject(pi.hProcess, INFINITE);
@@ -157,6 +155,8 @@ void Level2Menu::draw(){
 			title.draw();
 		}));
 		
+		m_Select.draw();
+		
 		std::for_each(m_Backgrounds.begin(), m_Backgrounds.end(), TUL::enumerate<void>([&,this](Sprite & back, int i){
 			using namespace config;
 			back.setPosition(Glas::Vector2i(menu::X, menu::Y+i*menu::ItemHeight+animated_pixel));
@@ -165,7 +165,6 @@ void Level2Menu::draw(){
 	}
 
 	m_Bar.draw();
-	m_Select.draw();
 
 	{
 		int animated_pixel = (m_SelectGameLerp.isAnimating()) ? m_SelectGameLerp.next() : 0;
