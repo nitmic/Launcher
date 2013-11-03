@@ -5,7 +5,6 @@
 #include <ImageIrrAdapter.h>
 #include <FakeFullScreen.h>
 
-#include <boost/filesystem/path.hpp>
 #include <Music.h>
 
 Level2Menu::Level2Menu(int priority) : m_Priority(priority), m_Titles(config::menu::NumOfMenuItems), m_Bar(priority+1){
@@ -115,34 +114,8 @@ void Level2Menu::step(){
 	}
 }
 
-void Level2Menu::select(){
-	SDLAdapter::ReserveTune(std::make_shared<SDLAdapter::Silent>());
-	SDLAdapter::PlayTune();
-
-	STARTUPINFO				si;
-	PROCESS_INFORMATION		pi;
-	ZeroMemory(&si, sizeof(STARTUPINFO));
-	ZeroMemory(&pi, sizeof(PROCESS_INFORMATION));
-
-	
-	TUL::restoreFakeFullScreen(GetSingleton<IrrApp>()->accessHWND());
-
-	//	ProcessçÏê¨
-	TUL::tString tPath = TUL::to_tstring(m_GameList[m_CurrentIndex].getGameExeFilePath());
-	TUL::tString dirPath = boost::filesystem::path(tPath).parent_path().c_str();
-
-	assert(CreateProcess(tPath.c_str(), NULL, NULL, NULL, FALSE, 0, NULL, dirPath.c_str(), &si, &pi));
-
-	GetSingleton<IrrApp>()->accessDevice()->minimizeWindow();
-	WaitForSingleObject(pi.hProcess, INFINITE);
-	GetSingleton<IrrApp>()->accessDevice()->restoreWindow();
-	TUL::fakeFullScreen(GetSingleton<IrrApp>()->accessHWND(), config::Width, config::Height);
-
-	
-	CloseHandle(pi.hThread);
-	CloseHandle(pi.hProcess);
-
-	return;
+TUL::tString Level2Menu::select(){
+	return TUL::to_tstring(m_GameList[m_CurrentIndex].getGameExeFilePath());
 }
 
 void Level2Menu::draw(){

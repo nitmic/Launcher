@@ -28,7 +28,7 @@ public:
 	void prev();
 
 	void draw();
-	void select();
+	TUL::tString select();
 	void step();
 private:
 	void addSelectItemUpdate();

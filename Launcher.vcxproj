@@ -89,6 +89,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ConfirmationScreen.cpp" />
     <ClCompile Include="GameCategory.cpp" />
     <ClCompile Include="GameList.cpp" />
     <ClCompile Include="Level0.cpp" />
@@ -103,6 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbsSlideMenu.h" />
+    <ClInclude Include="ConfirmationScreen.h" />
     <ClInclude Include="GameCategory.h" />
     <ClInclude Include="GameList.h" />
     <ClInclude Include="Level0.h" />
