@@ -36,6 +36,7 @@ struct ConfirmationScreen::Impl{
 ConfirmationScreen::ConfirmationScreen(TUL::tString exe_path, int priority){
 	__impl__ = std::make_shared<Impl>();
 	__impl__->exe_path = exe_path;
+	__impl__->ri = 1;
 
 	__impl__->image.setPriority(priority);
 	__impl__->image.setResouceName(_T("confirmation.png"));
