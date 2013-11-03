@@ -85,6 +85,7 @@ void Level2::step(
 	if(j.getButton(AbsJoypad::A).isJustPressed() || GetSingleton<DXLib::DXKeyboard>()->isJustPressed(0x1C)){
 		sceneStack->setNextScene(std::make_shared<ConfirmationScreen>(__impl__->menu.select(), 9));
 		sceneStack->setNextScene(std::make_shared<WaitScene>(config::menu::SceneTransDelay*2/3));
+		j.update();
 	}
 }
 
