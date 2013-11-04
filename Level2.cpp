@@ -75,11 +75,13 @@ void Level2::step(
 	if(j.getButton(AbsJoypad::Up).isPressed() || GetSingleton<DXLib::DXKeyboard>()->isPressed(0x25)){
 		__impl__->cursor.ring(_T("./Sound/guard.wav"));
 		__impl__->menu.next();
-		sceneStack->setNextScene(std::make_shared<WaitScene>(menu::Delay));
+		auto just = j.getButton(AbsJoypad::Up).isJustPressed() || GetSingleton<DXLib::DXKeyboard>()->isJustPressed(0x25);
+		sceneStack->setNextScene(std::make_shared<WaitScene>(menu::Delay * (just?2:1)));
 	}else if(j.getButton(AbsJoypad::Down).isPressed() || GetSingleton<DXLib::DXKeyboard>()->isPressed(0x24)){
 		__impl__->cursor.ring(_T("./Sound/guard.wav"));
 		__impl__->menu.prev();
-		sceneStack->setNextScene(std::make_shared<WaitScene>(menu::Delay));
+		auto just = j.getButton(AbsJoypad::Down).isJustPressed() || GetSingleton<DXLib::DXKeyboard>()->isJustPressed(0x24);
+		sceneStack->setNextScene(std::make_shared<WaitScene>(menu::Delay * (just?2:1)));
 	}
 
 	if(j.getButton(AbsJoypad::A).isJustPressed() || GetSingleton<DXLib::DXKeyboard>()->isJustPressed(0x1C)){

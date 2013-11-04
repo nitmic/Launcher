@@ -83,12 +83,12 @@ void ConfirmationScreen::step(
 			exec();
 			sceneStack->loadSceneStack(SceneName::TopMenu);
 		}
-		sceneStack->setNextScene(std::make_shared<WaitScene>(60));
+		sceneStack->setNextScene(std::make_shared<WaitScene>(SceneTransDelay));
 		return;
 	}
 
 	if(__impl__->joypad.getButton(AbsJoypad::B).isJustPressed() || GetSingleton<DXLib::DXKeyboard>()->isPressed(0x39)){
-		sceneStack->setNextScene(std::make_shared<WaitScene>(60));
+		sceneStack->setNextScene(std::make_shared<WaitScene>(SceneTransDelay));
 		return;
 	}
 
