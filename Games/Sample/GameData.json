@@ -7,6 +7,6 @@
 		"sampleImages" : [""]
 	},
 	"genre": ["Action"],
-	"exe" : "CyberForth.exe",
+	"exe" : "kinoko.exe",
 	"numOfPersons" : [1]
 }

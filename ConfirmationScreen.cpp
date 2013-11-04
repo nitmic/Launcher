@@ -57,26 +57,16 @@ void ConfirmationScreen::exec(){
 
 	
 	TUL::restoreFakeFullScreen(GetSingleton<IrrApp>()->accessHWND());
+	while(!IsIconic(GetSingleton<IrrApp>()->accessHWND())) ShowWindow(GetSingleton<IrrApp>()->accessHWND(), SW_MINIMIZE);
 
 	//	Processì¬
 	TUL::tString dirPath = boost::filesystem::path(__impl__->exe_path).parent_path().c_str();
 	assert(CreateProcess(__impl__->exe_path.c_str(), NULL, NULL, NULL, FALSE, 0, NULL, dirPath.c_str(), &si, &pi));
-
-	//GetSingleton<IrrApp>()->accessDevice()->minimizeWindow();
-	ShowWindow(GetSingleton<IrrApp>()->accessHWND(), SW_SHOWMINIMIZED);
-
 	WaitForSingleObject(pi.hProcess, INFINITE);
-	
 	CloseHandle(pi.hThread);
 	CloseHandle(pi.hProcess);
 
-	//GetSingleton<IrrApp>()->accessDevice()->restoreWindow();
-	while(!ShowWindow(GetSingleton<IrrApp>()->accessHWND(), SW_NORMAL)) continue;
-
 	TUL::fakeFullScreen(GetSingleton<IrrApp>()->accessHWND(), config::Width, config::Height);
-	
-
-
 	return;
 }
 
