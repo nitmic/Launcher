@@ -79,7 +79,7 @@ void Level2Menu::next(){
 	});
 	
 	addSelectItemUpdate();
-	m_Bar.setPosition((double)m_CurrentIndex/(double)m_GameList.size());
+	m_Bar.setPosition(((double)-m_CurrentIndex)/((double)m_GameList.size()-1));
 }
 
 void Level2Menu::prev(){
@@ -97,7 +97,7 @@ void Level2Menu::prev(){
 	});
 	
 	addSelectItemUpdate();
-	m_Bar.setPosition((double)m_CurrentIndex/(double)m_GameList.size());
+	m_Bar.setPosition(((double)-m_CurrentIndex)/((double)m_GameList.size()-1));
 }
 
 void Level2Menu::step(){

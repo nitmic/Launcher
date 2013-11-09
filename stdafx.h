@@ -65,7 +65,7 @@ namespace{
 			namespace scrollbar{
 				const int Y = 60;
 				const int X = 765;
-				const int Height = 445;
+				const int Height = 365;
 				namespace resource{
 					const TUL::tString ScrollButton = _T("./Image/Menu/ScrollButton.png");
 					const TUL::tString ScrollBar = _T("./Image/Menu/ScrollBar.png");

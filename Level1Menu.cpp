@@ -62,7 +62,7 @@ void Level1Menu::next(){
 	});
 	
 	selectItemUpdate();
-	m_Bar.setPosition((double)m_CurrentIndex/(double)m_Filters.size());
+	m_Bar.setPosition(((double)-m_CurrentIndex)/((double)m_Filters.size()-1));
 }
 
 void Level1Menu::prev(){
@@ -80,7 +80,7 @@ void Level1Menu::prev(){
 	});
 	
 	selectItemUpdate();
-	m_Bar.setPosition((double)m_CurrentIndex/(double)m_Filters.size());
+	m_Bar.setPosition(((double)-m_CurrentIndex)/((double)m_Filters.size()-1));
 }
 
 std::shared_ptr<IScene> Level1Menu::select(){
