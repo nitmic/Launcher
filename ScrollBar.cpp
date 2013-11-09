@@ -13,7 +13,6 @@ ScrollBar::ScrollBar(int priority) : currentPos_percent(0){
 void ScrollBar::setPosition(double percent){
 	using namespace config;
 	int height = menu::scrollbar::Height;
-
 	lerp = LerpAnimation(menu::Delay, percent*height, currentPos_percent*height, [&, this, height]() -> double{
 		return this->currentPos_percent*height;
 	});
