@@ -6,7 +6,7 @@
 		"sampleVideo" : "titan.ogg",
 		"sampleImages" : [""]
 	},
-	"genre": "Party",
+	"genre": ["Party"],
 	"exe" : "exe/NitmicBrothers.exe",
-	"numOfPersons" : [2,3,4]
+	"numOfPersons" : [1,2,3,4]
 }

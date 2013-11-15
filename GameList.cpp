@@ -67,6 +67,15 @@ std::string GameData::getGameExeFilePath() const{
 	return (boost::filesystem::path(m_Directory) / name).string();
 }
 
+std::vector<std::string> GameData::getGenre() const{
+	std::vector<std::string> output;
+	auto list =  m_Data->get("genre").get<picojson::array>();
+	for(auto it=list.begin(); it!=list.end(); ++it){
+		output.push_back(it->to_str());
+	}
+	return output;
+}
+
 std::bitset<4> GameData::getNumOfPersonsPlayingGame() const{
 	std::bitset<4> numOfPersons;
 

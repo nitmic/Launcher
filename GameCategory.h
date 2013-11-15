@@ -31,3 +31,20 @@ struct ThreePlayer : public GameCategory{
 struct FourPlayer : public GameCategory{
 	FourPlayer();
 };
+
+
+struct ActionGames : public GameCategory{
+	ActionGames();
+};
+
+struct PartyGames : public GameCategory{
+	PartyGames();
+};
+
+struct BattleGames : public GameCategory{
+	BattleGames();
+};
+
+struct TableGames : public GameCategory{
+	TableGames();
+};

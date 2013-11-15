@@ -52,4 +52,10 @@ private:
 	TUL::Delay m_MovieStartDelay;
 
 	Sprite m_SelectSummary;
+
+	
+	Sprite m_1P;
+	Sprite m_2P;
+	Sprite m_3P;
+	Sprite m_4P;
 };

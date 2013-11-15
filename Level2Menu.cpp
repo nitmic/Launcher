@@ -1,5 +1,6 @@
 #include "Level2Menu.h"
 
+#include <bitset>
 #include <algorithm>
 #include <enumerate.hpp>
 #include <ImageIrrAdapter.h>
@@ -31,6 +32,18 @@ Level2Menu::Level2Menu(int priority) : m_Priority(priority), m_Titles(config::me
 	m_Movie.setPriority(3);
 	m_Movie.setPosition(Glas::Vector2i(info::X+2, info::Y+2));
 
+	auto absPos = Glas::Vector2i(40, 350);
+	m_1P.setPosition(absPos);
+	m_2P.setPosition(absPos + Glas::Vector2i(0, 50));
+	m_3P.setPosition(absPos + Glas::Vector2i(0, 100));
+	m_4P.setPosition(absPos + Glas::Vector2i(0, 150));
+	
+	m_1P.setPriority(m_Priority);
+	m_2P.setPriority(m_Priority);
+	m_3P.setPriority(m_Priority);
+	m_4P.setPriority(m_Priority);
+
+
 	m_SelectSummary.setPosition(Glas::Vector2i(125,265));
 	m_SelectSummary.setPriority(4);
 }
@@ -49,6 +62,13 @@ void Level2Menu::addItem(GameData gameData){
 }
 
 void Level2Menu::addSelectItemUpdate(){
+	auto bits = m_GameList[m_CurrentIndex].getNumOfPersonsPlayingGame();
+	
+	m_1P.setResouceName(bits.at(0)?_T("1p_on.png"):_T("1p_off.png"));
+	m_2P.setResouceName(bits.at(1)?_T("2p_on.png"):_T("2p_off.png"));
+	m_3P.setResouceName(bits.at(2)?_T("3p_on.png"):_T("3p_off.png"));
+	m_4P.setResouceName(bits.at(3)?_T("4p_on.png"):_T("4p_off.png"));
+
 	m_SelectGameInfo.setResouceName(TUL::to_tstring(m_GameList[m_CurrentIndex].getInfoImagePath()));
 	m_SelectGameLerp = LerpAnimation(config::menu::Delay, 0, 20, [this]() -> double{
 		return 0;
@@ -144,4 +164,9 @@ void Level2Menu::draw(){
 		m_SelectGameInfo.setPosition(Glas::Vector2i(config::info::X+animated_pixel, config::info::Y));
 		m_SelectGameInfo.draw();
 	}
+	
+	m_1P.draw();
+	m_2P.draw();
+	m_3P.draw();
+	m_4P.draw();
 }

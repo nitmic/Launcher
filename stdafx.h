@@ -37,6 +37,11 @@ namespace{
 				const TUL::tString TwoPlayer = _T("./Image/Title/2PlayerGame.png");
 				const TUL::tString ThreePlayer = _T("./Image/Title/3PlayerGame.png");
 				const TUL::tString FourPlayer = _T("./Image/Title/4PlayerGame.png");
+
+				const TUL::tString Action = _T("./Image/Title/ActionGame.png");
+				const TUL::tString Party = _T("./Image/Title/PartyGame.png");
+				const TUL::tString Battle = _T("./Image/Title/BattleGame.png");
+				const TUL::tString Table = _T("./Image/Title/TableGame.png");
 			};
 		};
 
@@ -49,6 +54,12 @@ namespace{
 				const TUL::tString TwoPlayer = _T("./Image/Menu/Info_2Player.png");
 				const TUL::tString ThreePlayer = _T("./Image/Menu/Info_3Player.png");
 				const TUL::tString FourPlayer = _T("./Image/Menu/Info_4Player.png");
+
+				
+				const TUL::tString Action = _T("./Image/Menu/Info_ActionGame.png");
+				const TUL::tString Party = _T("./Image/Menu/Info_PartyGame.png");
+				const TUL::tString Battle = _T("./Image/Menu/Info_BattleGame.png");
+				const TUL::tString Table = _T("./Image/Menu/Info_TableGame.png");
 			};
 		};
 
@@ -78,6 +89,11 @@ namespace{
 				const TUL::tString TwoPlayer = _T("./Image/Menu/Category_2Player.png");
 				const TUL::tString ThreePlayer = _T("./Image/Menu/Category_3Player.png");
 				const TUL::tString FourPlayer = _T("./Image/Menu/Category_4Player.png");
+				
+				const TUL::tString Action = _T("./Image/Menu/Category_Action.png");
+				const TUL::tString Party = _T("./Image/Menu/Category_Party.png");
+				const TUL::tString Battle = _T("./Image/Menu/Category_Battle.png");
+				const TUL::tString Table = _T("./Image/Menu/Category_Table.png");
 
 				const TUL::tString Back_category = _T("./Image/Menu/Background_category.png");
 				const TUL::tString Back_player = _T("./Image/Menu/Background_player.png");

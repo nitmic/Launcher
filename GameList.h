@@ -20,6 +20,7 @@ public:
 	std::string getInfoImagePath() const;
 	std::string getSampleVideoPath() const;
 	std::string getGameExeFilePath() const;
+	std::vector<std::string> getGenre() const;
 	std::bitset<4> getNumOfPersonsPlayingGame() const;
 private:
 	std::string m_Directory;

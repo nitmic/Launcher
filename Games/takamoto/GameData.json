@@ -6,7 +6,7 @@
 		"sampleVideo" : "titan.ogg",
 		"sampleImages" : [""]
 	},
-	"genre": "Action",
+	"genre": ["Action"],
 	"exe" : "Game.exe",
 	"numOfPersons" : [2]
 }

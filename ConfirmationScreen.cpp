@@ -1,9 +1,10 @@
 #include "ConfirmationScreen.h"
 
-
+#include <numeric>
 #include <SceneHandler.h>
 #include <JoypadDXAdapter.h>
 #include <Button.h>
+#include <AnalogStick.h>
 #include <MDAUtility.hpp>
 #include <SpriteIrrAdapter.h>
 #include <WaitScene.h>
@@ -21,8 +22,13 @@
 #include <Music.h>
 
 struct ConfirmationScreen::Impl{
-	Impl() : joypad(0),ri(2){}
-	Joypad joypad;
+	Impl() : ri(2){
+		joypad.emplace_back(0);
+		joypad.emplace_back(1);
+		joypad.emplace_back(2);
+		joypad.emplace_back(3);
+	}
+	std::vector<Joypad> joypad;
 	SDLAdapter::GameSE cursor_se;
 	TUL::RingIndex ri;
 	Sprite image;
@@ -76,9 +82,14 @@ void ConfirmationScreen::step(
 	using config::menu::Delay;
 	using config::menu::SceneTransDelay;
 
-	__impl__->joypad.update();
+	auto & js = __impl__->joypad;
+	std::for_each(js.begin(), js.end(), std::mem_fun_ref(&Joypad::update));
 
-	if(__impl__->joypad.getButton(AbsJoypad::A).isJustPressed() || GetSingleton<DXLib::DXKeyboard>()->isPressed(0x1C)){
+	if(
+		std::accumulate(js.begin(), js.end(), false, [](bool init, Joypad & j){
+			return init || j.getButton(AbsJoypad::A).isJustPressed();
+		})
+	){
 		if(__impl__->ri==0){
 			exec();
 			sceneStack->loadSceneStack(SceneName::TopMenu);
@@ -87,22 +98,36 @@ void ConfirmationScreen::step(
 		return;
 	}
 
-	if(__impl__->joypad.getButton(AbsJoypad::B).isJustPressed() || GetSingleton<DXLib::DXKeyboard>()->isPressed(0x39)){
+
+	if(
+		std::accumulate(js.begin(), js.end(), false, [](bool init, Joypad & j){
+			return init || j.getButton(AbsJoypad::B).isJustPressed();
+		})
+	){
 		sceneStack->setNextScene(std::make_shared<WaitScene>(SceneTransDelay));
 		return;
 	}
 
 	sceneStack->setNextScene(sceneStack->getCurrentScene());
-	if(__impl__->joypad.getButton(AbsJoypad::Up).isJustPressed() || GetSingleton<DXLib::DXKeyboard>()->isJustPressed(0x25)){
+	if(
+		std::accumulate(js.begin(), js.end(), false, [](bool init, Joypad & j)->bool{
+			auto stick = j.getLStick().getTilt().getAngle();
+			return init || j.getButton(AbsJoypad::Up).isJustPressed() || (70.f < stick && stick < 110.f && j.getLStick().getTilt().getLength() > 0.6);
+		})
+	){
 		__impl__->cursor_se.ring(_T("./Sound/guard.wav"));
 		__impl__->ri--;
-		sceneStack->setNextScene(std::make_shared<WaitScene>(Delay));
-	}else if(__impl__->joypad.getButton(AbsJoypad::Down).isJustPressed() || GetSingleton<DXLib::DXKeyboard>()->isJustPressed(0x24)){
+		sceneStack->setNextScene(std::make_shared<WaitScene>(Delay*2));
+	}else if(
+		std::accumulate(js.begin(), js.end(), false, [](bool init, Joypad & j)->bool{
+			auto stick = j.getLStick().getTilt().getAngle();
+			return init || j.getButton(AbsJoypad::Down).isJustPressed() || (250.f < stick && stick < 290.f && j.getLStick().getTilt().getLength() > 0.6);
+		})
+	){
 		__impl__->cursor_se.ring(_T("./Sound/guard.wav"));
 		__impl__->ri++;
-		sceneStack->setNextScene(std::make_shared<WaitScene>(Delay));
+		sceneStack->setNextScene(std::make_shared<WaitScene>(Delay*2));
 	}
-
 }
 
 void ConfirmationScreen::setCursorAnimation(){
@@ -116,7 +141,6 @@ void ConfirmationScreen::setCursorAnimation(){
 	});
 }
 void ConfirmationScreen::draw(){
-
 	__impl__->cursor.setPosition(Glas::Vector2i(__impl__->cursorX + 200, 150+65*__impl__->ri + 100));
 	__impl__->cursor.draw();
 
